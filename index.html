@@ -1,48 +1,56 @@
 <!doctype html>
-<html lang="es">
+<html lang="es" data-mode="day">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Diver Lauro · Salón de celebraciones infantiles en Alhaurín de la Torre</title>
-  <meta name="description" content="Diver Lauro: salón de celebraciones y parque infantil en Alhaurín de la Torre (Málaga). Cumpleaños, comuniones y fiestas privadas con parque de bolas, tobogán, futbolín y salón climatizado. Reserva por WhatsApp: 647 91 30 22.">
-  <meta name="keywords" content="salón de celebraciones Alhaurín de la Torre, cumpleaños infantiles Alhaurín de la Torre, parque de bolas Alhaurín, salón de cumpleaños Málaga, fiestas infantiles Alhaurín de la Torre, Diver Lauro">
+  <title>Diver Lauro · Salón de celebraciones en Alhaurín de la Torre (Málaga)</title>
+  <meta name="description" content="Diver Lauro, salón de celebraciones en Alhaurín de la Torre (Málaga). Cumpleaños, comuniones, bautizos, bodas, despedidas y comidas de empresa, de día y de noche. Parque de bolas, equipo de sonido y salón climatizado. Reserva: 647 91 30 22.">
+  <meta name="keywords" content="salón de celebraciones Alhaurín de la Torre, salón de eventos Alhaurín de la Torre, cumpleaños infantiles Alhaurín, salón comuniones Málaga, local para fiestas Alhaurín de la Torre, despedidas de soltera Málaga, parque de bolas Alhaurín, Diver Lauro">
   <meta name="author" content="Diver Lauro">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <link rel="canonical" href="https://diverlauro.pages.dev/">
-  <meta name="theme-color" content="#0E2A5C">
+  <meta name="theme-color" content="#EBD450">
 
-  <!-- Geo / SEO local -->
   <meta name="geo.region" content="ES-MA">
   <meta name="geo.placename" content="Alhaurín de la Torre">
   <meta name="geo.position" content="36.6574069;-4.5781131">
   <meta name="ICBM" content="36.6574069, -4.5781131">
 
-  <!-- Open Graph / redes sociales -->
   <meta property="og:type" content="website">
   <meta property="og:locale" content="es_ES">
   <meta property="og:site_name" content="Diver Lauro">
   <meta property="og:title" content="Diver Lauro · Salón de celebraciones en Alhaurín de la Torre">
-  <meta property="og:description" content="Cumpleaños y fiestas infantiles con parque de bolas, tobogán, futbolín y salón climatizado. Reserva por WhatsApp.">
+  <meta property="og:description" content="Cumpleaños, comuniones, bodas, despedidas y comidas de empresa. De día y de noche. Reserva por WhatsApp.">
   <meta property="og:url" content="https://diverlauro.pages.dev/">
-  <meta property="og:image" content="https://diverlauro.pages.dev/img/og-image.png">
+  <meta property="og:image" content="https://diverlauro.pages.dev/img/og-image.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Diver Lauro, salón de celebraciones infantiles en Alhaurín de la Torre">
+  <meta property="og:image:alt" content="Diver Lauro, salón de celebraciones en Alhaurín de la Torre">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Diver Lauro · Salón de celebraciones en Alhaurín de la Torre">
-  <meta name="twitter:description" content="Cumpleaños y fiestas infantiles con parque de bolas, tobogán y salón climatizado.">
-  <meta name="twitter:image" content="https://diverlauro.pages.dev/img/og-image.png">
+  <meta name="twitter:description" content="Cumpleaños, comuniones, bodas, despedidas y comidas de empresa. De día y de noche.">
+  <meta name="twitter:image" content="https://diverlauro.pages.dev/img/og-image.jpg">
 
-  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="img/favicon-48.png" sizes="48x48" type="image/png">
+  <link rel="icon" href="img/favicon-32.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
   <link rel="manifest" href="site.webmanifest">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Kaushan+Script&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="img/logo.webp">
   <link rel="stylesheet" href="css/styles.css">
 
-  <!-- Datos estructurados: negocio local -->
+  <!-- Modo día/noche antes de pintar (evita parpadeo) -->
+  <script>
+    (function () {
+      var m; try { m = localStorage.getItem("dl-mode"); } catch (e) {}
+      if (m !== "day" && m !== "night") { var h = new Date().getHours(); m = (h >= 20 || h < 7) ? "night" : "day"; }
+      document.documentElement.dataset.mode = m;
+    })();
+  </script>
+
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -50,10 +58,16 @@
     "@id": "https://diverlauro.pages.dev/#negocio",
     "name": "Diver Lauro",
     "alternateName": "Diver Lauro Salón de Celebraciones",
-    "description": "Salón de celebraciones y parque infantil en Alhaurín de la Torre (Málaga) para cumpleaños, comuniones, bautizos y fiestas privadas.",
+    "description": "Salón de celebraciones en Alhaurín de la Torre (Málaga) para cumpleaños, comuniones, bautizos, bodas, despedidas de soltero/a, comidas de empresa y eventos privados, de día y de noche. Con parque de bolas, equipo de sonido y salón climatizado.",
     "url": "https://diverlauro.pages.dev/",
-    "image": "https://diverlauro.pages.dev/img/og-image.png",
-    "logo": "https://diverlauro.pages.dev/img/apple-touch-icon.png",
+    "logo": "https://diverlauro.pages.dev/img/logo.png",
+    "image": [
+      "https://diverlauro.pages.dev/img/og-image.jpg",
+      "https://diverlauro.pages.dev/img/fotos/salon-comunion.webp",
+      "https://diverlauro.pages.dev/img/fotos/parque-bolas.webp",
+      "https://diverlauro.pages.dev/img/fotos/boda-presidencia.webp",
+      "https://diverlauro.pages.dev/img/fotos/fachada.webp"
+    ],
     "telephone": "+34647913022",
     "priceRange": "€€",
     "address": {
@@ -68,11 +82,11 @@
     "hasMap": "https://www.google.com/maps/search/?api=1&query=36.6574069%2C-4.5781131",
     "areaServed": ["Alhaurín de la Torre", "Alhaurín el Grande", "Churriana", "Cártama", "Benalmádena", "Torremolinos", "Málaga"],
     "amenityFeature": [
-      { "@type": "LocationFeatureSpecification", "name": "Parque de bolas", "value": true },
-      { "@type": "LocationFeatureSpecification", "name": "Tobogán y zona de escalada", "value": true },
+      { "@type": "LocationFeatureSpecification", "name": "Parque de bolas y tobogán", "value": true },
       { "@type": "LocationFeatureSpecification", "name": "Futbolín y mesa de pimpón", "value": true },
-      { "@type": "LocationFeatureSpecification", "name": "Aire acondicionado", "value": true },
-      { "@type": "LocationFeatureSpecification", "name": "Equipo de música y TV", "value": true }
+      { "@type": "LocationFeatureSpecification", "name": "Equipo de sonido y TV", "value": true },
+      { "@type": "LocationFeatureSpecification", "name": "Zona de office con frigorífico y microondas", "value": true },
+      { "@type": "LocationFeatureSpecification", "name": "Aire acondicionado", "value": true }
     ],
     "sameAs": [
       "https://www.instagram.com/diverlauro/",
@@ -85,24 +99,32 @@
     "@context": "https://schema.org",
     "@type": "FAQPage",
     "mainEntity": [
+      { "@type": "Question", "name": "¿Qué celebraciones se pueden hacer en Diver Lauro?",
+        "acceptedAnswer": { "@type": "Answer", "text": "De todo: cumpleaños infantiles y de adultos, comuniones, bautizos, bodas y aniversarios, despedidas de soltero/a, comidas y cenas de empresa, reuniones familiares, peñas y eventos privados." } },
+      { "@type": "Question", "name": "¿Se pueden hacer fiestas de noche?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Sí. Diver Lauro tiene horario de día y de noche, así que puedes celebrar desde una merienda infantil hasta una cena o una fiesta nocturna. Consúltanos el horario para tu fecha." } },
       { "@type": "Question", "name": "¿Dónde está Diver Lauro?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Estamos en la Calle Crianza, 30, 29130 Alhaurín de la Torre (Málaga), a pocos minutos de Málaga capital, Churriana y Alhaurín el Grande." } },
-      { "@type": "Question", "name": "¿Cómo reservo el salón para un cumpleaños?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Escríbenos por WhatsApp o llámanos al 647 91 30 22 indicando la fecha, el tipo de celebración y el número aproximado de invitados. Te confirmamos disponibilidad y precio." } },
-      { "@type": "Question", "name": "¿Qué tiene el salón para los niños?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Parque de bolas, tobogán, zona de escalada, colchonetas, futbolín, mesa de pimpón y vehículos de juguete, además de un salón con mesas y sillas para los adultos." } },
-      { "@type": "Question", "name": "¿El local está climatizado?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Sí, el salón cuenta con aire acondicionado para que la fiesta sea cómoda en cualquier época del año." } },
-      { "@type": "Question", "name": "¿Qué tipo de celebraciones se pueden hacer?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Cumpleaños infantiles, comuniones, bautizos, fiestas familiares, reuniones de amigos y cualquier evento privado." } }
+        "acceptedAnswer": { "@type": "Answer", "text": "En la Calle Crianza, 30, 29130 Alhaurín de la Torre (Málaga), a pocos minutos de Málaga capital, Churriana y Alhaurín el Grande." } },
+      { "@type": "Question", "name": "¿Cómo reservo el salón?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Escríbenos por WhatsApp o llámanos al 647 91 30 22 con la fecha, el horario (día o noche), el tipo de celebración y el número aproximado de invitados. Te confirmamos disponibilidad y precio." } },
+      { "@type": "Question", "name": "¿Qué incluye el salón?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Sala amplia con mesas y sillas, parque de bolas con tobogán, futbolín, mesa de pimpón, rincón infantil, equipo de sonido y TV, zona de office con frigorífico y microondas, tronas, aseos y aire acondicionado." } },
+      { "@type": "Question", "name": "¿Puedo decorar el salón a mi gusto?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Claro. Cada celebración lo decora a su manera: globos, manteles, mesas dulces, photocalls… Cuéntanos tu idea y te ayudamos." } }
     ]
   }
+  </script>
+
+  <script type="importmap">
+  { "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  } }
   </script>
 </head>
 <body>
   <a class="skip-link" href="#contenido">Saltar al contenido</a>
 
-  <!-- Iconos -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
     <defs>
       <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
@@ -119,206 +141,307 @@
       <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
       <symbol id="i-heart" viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></symbol>
       <symbol id="i-gift" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7M7.5 8a2.5 2.5 0 0 1 0-5C10 3 12 8 12 8s2-5 4.5-5a2.5 2.5 0 0 1 0 5"/></symbol>
-      <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
       <symbol id="i-game" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h4M8 10v4M15 13h.01M18 11h.01"/></symbol>
-      <symbol id="i-car" viewBox="0 0 24 24"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></symbol>
       <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
       <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
       <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
       <symbol id="i-close" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
-      <symbol id="i-climb" viewBox="0 0 24 24"><path d="M4 21V5a2 2 0 0 1 2-2h0M20 21V5a2 2 0 0 0-2-2h0M4 8h16M4 13h16M4 18h16"/></symbol>
+      <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+      <symbol id="i-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+      <symbol id="i-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+      <symbol id="i-expand" viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></symbol>
+      <symbol id="i-glass" viewBox="0 0 24 24"><path d="M8 22h8M12 15v7M12 15a5 5 0 0 0 5-5c0-2-.5-4-2-8H9c-1.5 4-2 6-2 8a5 5 0 0 0 5 5Z"/></symbol>
+      <symbol id="i-briefcase" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></symbol>
+      <symbol id="i-utensils" viewBox="0 0 24 24"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></symbol>
+      <symbol id="i-speaker" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><circle cx="12" cy="14" r="4"/><path d="M12 6h.01"/></symbol>
+      <symbol id="i-google" viewBox="0 0 24 24"><path d="M21.35 11.1H12v2.98h5.35c-.23 1.4-1.63 4.1-5.35 4.1a6.18 6.18 0 0 1 0-12.36c1.92 0 3.2.82 3.94 1.52l2.68-2.58A9.43 9.43 0 0 0 12 2.2a9.8 9.8 0 1 0 0 19.6c5.66 0 9.4-3.98 9.4-9.58 0-.64-.07-1.13-.05-1.12Z" fill="currentColor" stroke="none"/></symbol>
     </defs>
   </svg>
 
   <header class="site-header" id="top">
     <div class="container header-inner">
       <a class="brand" href="#top" aria-label="Diver Lauro, inicio">
-        <span class="brand-balls" aria-hidden="true"><i></i><i></i><i></i></span>
-        <span class="brand-name">Diver<span>Lauro</span></span>
+        <img class="logo logo-day" src="img/logo.webp" alt="Diver Lauro" width="1400" height="295">
+        <img class="logo logo-night" src="img/logo-yellow.webp" alt="" width="1400" height="295" aria-hidden="true">
       </a>
       <nav class="nav" id="nav" aria-label="Principal">
         <a href="#celebraciones">Celebraciones</a>
-        <a href="#instalaciones">Instalaciones</a>
+        <a href="#dia-noche">Día y noche</a>
+        <a href="#local">El local</a>
+        <a href="#galeria">Galería</a>
         <a href="#reservar">Reservar</a>
-        <a href="#preguntas">Preguntas</a>
         <a href="#contacto">Contacto</a>
-        <a class="btn btn-sun nav-cta" href="https://wa.me/34647913022?text=Hola%2C%20me%20gustar%C3%ADa%20informaci%C3%B3n%20para%20celebrar%20una%20fiesta%20en%20Diver%20Lauro" target="_blank" rel="noopener">
+        <a class="btn btn-primary nav-cta" href="https://wa.me/34647913022?text=Hola%2C%20me%20gustar%C3%ADa%20informaci%C3%B3n%20para%20celebrar%20en%20Diver%20Lauro" target="_blank" rel="noopener">
           <svg class="ic"><use href="#i-chat"/></svg> WhatsApp
         </a>
       </nav>
-      <button class="menu-toggle" aria-controls="nav" aria-expanded="false" aria-label="Abrir menú">
-        <svg class="ic ic-open"><use href="#i-menu"/></svg>
-        <svg class="ic ic-close"><use href="#i-close"/></svg>
-      </button>
+      <div class="header-tools">
+        <button class="mode-btn" type="button" data-mode-toggle aria-label="Cambiar a modo noche" title="Día / noche">
+          <span class="mode-btn-track"><svg class="ic ic-sun"><use href="#i-sun"/></svg><svg class="ic ic-moon"><use href="#i-moon"/></svg></span>
+        </button>
+        <button class="menu-toggle" aria-controls="nav" aria-expanded="false" aria-label="Abrir menú">
+          <svg class="ic ic-open"><use href="#i-menu"/></svg>
+          <svg class="ic ic-close"><use href="#i-close"/></svg>
+        </button>
+      </div>
     </div>
   </header>
 
   <main id="contenido">
-    <!-- HERO -->
+    <!-- HERO 3D -->
     <section class="hero" aria-labelledby="hero-title">
-      <canvas class="ballpit" aria-hidden="true"></canvas>
-      <div class="hero-glow" aria-hidden="true"></div>
+      <div class="hero-sky" aria-hidden="true"><div class="sun"></div><div class="stars"></div></div>
+      <canvas class="scene" id="scene" aria-hidden="true"></canvas>
       <div class="container hero-inner">
-        <p class="eyebrow reveal"><svg class="ic"><use href="#i-pin"/></svg> Alhaurín de la Torre · Málaga</p>
-        <h1 id="hero-title" class="hero-title">
-          <span class="line reveal" style="--d:.05s">Celebraciones</span>
-          <span class="line reveal" style="--d:.15s">que <em class="squiggle">se recuerdan</em></span>
-        </h1>
-        <p class="hero-lead reveal" style="--d:.28s">
-          Salón de celebraciones y parque infantil para cumpleaños, comuniones y fiestas privadas.
-          Los peques juegan, los mayores disfrutan, y tú solo te preocupas de soplar las velas.
-        </p>
-        <div class="hero-actions reveal" style="--d:.38s">
-          <a class="btn btn-sun btn-lg" href="#reservar">
-            Consultar fecha <svg class="ic"><use href="#i-arrow"/></svg>
-          </a>
-          <a class="btn btn-ghost btn-lg" href="tel:+34647913022">
-            <svg class="ic"><use href="#i-phone"/></svg> 647 91 30 22
-          </a>
-        </div>
-        <a class="rating reveal" style="--d:.48s" href="https://www.google.com/maps/search/?api=1&amp;query=Diver+Lauro+Alhaur%C3%ADn+de+la+Torre" target="_blank" rel="noopener">
-          <span class="rating-stars" aria-hidden="true">
-            <svg class="ic"><use href="#i-star"/></svg><svg class="ic"><use href="#i-star"/></svg><svg class="ic"><use href="#i-star"/></svg><svg class="ic"><use href="#i-star"/></svg><svg class="ic half"><use href="#i-star"/></svg>
+        <h1 id="hero-title">
+          <span class="eyebrow reveal"><svg class="ic"><use href="#i-pin"/></svg> Salón de celebraciones en Alhaurín de la Torre</span>
+          <span class="hero-big">
+            <span class="line reveal" style="--d:.08s">Celebra <em class="script">de día</em>.</span>
+            <span class="line reveal" style="--d:.18s">Brinda <em class="script">de noche</em>.</span>
           </span>
+        </h1>
+        <p class="hero-lead reveal" style="--d:.3s">
+          Cumpleaños, comuniones, bodas, despedidas, comidas de empresa… Un salón amplio con parque de bolas para los peques
+          y espacio de sobra para que los mayores lo den todo. <strong>Tú pones la fiesta, nosotros el sitio.</strong>
+        </p>
+        <div class="mode-switch reveal" style="--d:.38s" role="group" aria-label="Elige el tipo de fiesta">
+          <button type="button" data-set-mode="day"><svg class="ic"><use href="#i-sun"/></svg> Fiesta de día</button>
+          <button type="button" data-set-mode="night"><svg class="ic"><use href="#i-moon"/></svg> Fiesta de noche</button>
+          <span class="mode-switch-pill" aria-hidden="true"></span>
+        </div>
+        <div class="hero-actions reveal" style="--d:.46s">
+          <a class="btn btn-primary btn-lg" href="#reservar">Consultar fecha <svg class="ic"><use href="#i-arrow"/></svg></a>
+          <a class="btn btn-outline btn-lg" href="tel:+34647913022"><svg class="ic"><use href="#i-phone"/></svg> 647 91 30 22</a>
+        </div>
+        <a class="rating reveal" style="--d:.54s" href="#opiniones">
+          <span class="rating-stars" aria-hidden="true"><svg class="ic"><use href="#i-star"/></svg><svg class="ic"><use href="#i-star"/></svg><svg class="ic"><use href="#i-star"/></svg><svg class="ic"><use href="#i-star"/></svg><svg class="ic half"><use href="#i-star"/></svg></span>
           <span><strong data-count="4.5" data-decimals="1">4,5</strong> en Google · <strong data-count="175">175</strong>+ reseñas</span>
         </a>
       </div>
-      <p class="hero-hint" aria-hidden="true">Psst… toca las bolas 👆</p>
+      <p class="hero-hint" aria-hidden="true">🎈 Toca los globos</p>
     </section>
 
-    <!-- MARQUEE -->
     <div class="marquee" aria-hidden="true">
       <div class="marquee-track">
-        <span>Cumpleaños</span><b>●</b><span>Comuniones</span><b>●</b><span>Bautizos</span><b>●</b><span>Fiestas familiares</span><b>●</b><span>Baby showers</span><b>●</b><span>Reuniones de amigos</span><b>●</b><span>Eventos privados</span><b>●</b>
-        <span>Cumpleaños</span><b>●</b><span>Comuniones</span><b>●</b><span>Bautizos</span><b>●</b><span>Fiestas familiares</span><b>●</b><span>Baby showers</span><b>●</b><span>Reuniones de amigos</span><b>●</b><span>Eventos privados</span><b>●</b>
+        <span>Cumpleaños</span><b>✦</b><span>Comuniones</span><b>✦</b><span>Bautizos</span><b>✦</b><span>Bodas</span><b>✦</b><span>Despedidas de solter@s</span><b>✦</b><span>Comidas de empresa</span><b>✦</b><span>Aniversarios</span><b>✦</b><span>Peñas y eventos</span><b>✦</b><span>Fiestas infantiles</span><b>✦</b>
+        <span>Cumpleaños</span><b>✦</b><span>Comuniones</span><b>✦</b><span>Bautizos</span><b>✦</b><span>Bodas</span><b>✦</b><span>Despedidas de solter@s</span><b>✦</b><span>Comidas de empresa</span><b>✦</b><span>Aniversarios</span><b>✦</b><span>Peñas y eventos</span><b>✦</b><span>Fiestas infantiles</span><b>✦</b>
       </div>
     </div>
 
-    <!-- CELEBRACIONES -->
+    <!-- UN SALÓN, MIL CELEBRACIONES -->
     <section class="section" id="celebraciones" aria-labelledby="cel-title">
       <div class="container">
         <div class="section-head">
-          <p class="kicker reveal">Qué celebramos</p>
-          <h2 id="cel-title" class="reveal" style="--d:.08s">Un salón para cada <span class="hl">gran momento</span></h2>
-          <p class="section-lead reveal" style="--d:.16s">Un espacio amplio, cuidado y climatizado en Alhaurín de la Torre, pensado para que niños y mayores lo pasen en grande.</p>
+          <p class="kicker reveal">Un salón, mil celebraciones</p>
+          <h2 id="cel-title" class="reveal" style="--d:.08s">El mismo sitio, <span class="script-hl">tu</span> fiesta</h2>
+          <p class="section-lead reveal" style="--d:.16s">Fotos reales de celebraciones en Diver Lauro. Cada familia lo transforma a su manera: azul para una comunión, dorado para unos 40, lila para una boda…</p>
         </div>
-        <div class="cards">
-          <article class="card reveal tilt" style="--d:.05s; --accent: var(--coral)">
-            <div class="card-ic"><svg class="ic"><use href="#i-cake"/></svg></div>
-            <h3>Cumpleaños infantiles</h3>
-            <p>Parque de bolas, tobogán y juegos para que los peques no paren ni un segundo. La fiesta de cumpleaños que siempre han soñado.</p>
+
+        <div class="showcase reveal" style="--d:.1s">
+          <div class="showcase-tabs" role="tablist" aria-label="Tipos de celebración">
+            <button role="tab" id="t-com" aria-controls="p-show" aria-selected="true" data-img="salon-comunion" data-w="1600" data-h="900" data-cap="Comunión en azul · mesas imperiales para toda la familia">
+              <span class="tab-ic" style="--c:#2B7BE4"><svg class="ic"><use href="#i-heart"/></svg></span>
+              <span><strong>Comuniones y bautizos</strong><small>Comidas en familia con los niños jugando a la vista</small></span>
+            </button>
+            <button role="tab" id="t-cum" aria-controls="p-show" aria-selected="false" data-img="cumple-40" data-w="1600" data-h="1200" data-cap="Cumpleaños de 40 en rojo y dorado">
+              <span class="tab-ic" style="--c:#F25C54"><svg class="ic"><use href="#i-cake"/></svg></span>
+              <span><strong>Cumpleaños</strong><small>Infantiles, de 18, de 40… o de 90</small></span>
+            </button>
+            <button role="tab" id="t-bod" aria-controls="p-show" aria-selected="false" data-img="boda-presidencia" data-w="1600" data-h="1200" data-cap="Celebración de boda en lila con mesa presidencial">
+              <span class="tab-ic" style="--c:#9B5DE5"><svg class="ic"><use href="#i-glass"/></svg></span>
+              <span><strong>Bodas y aniversarios</strong><small>Mesa presidencial, centros y mesa dulce</small></span>
+            </button>
+            <button role="tab" id="t-noc" aria-controls="p-show" aria-selected="false" data-img="fiesta-luces" data-w="1600" data-h="1200" data-cap="Cortina de luces para una celebración especial">
+              <span class="tab-ic" style="--c:#E0B526"><svg class="ic"><use href="#i-spark"/></svg></span>
+              <span><strong>Despedidas y fiestas de noche</strong><small>Música, luces y a darlo todo</small></span>
+            </button>
+            <button role="tab" id="t-eve" aria-controls="p-show" aria-selected="false" data-img="evento-cultural-salon" data-w="1480" data-h="720" data-cap="Evento cultural con banderas, música en directo y comida">
+              <span class="tab-ic" style="--c:#16B39A"><svg class="ic"><use href="#i-briefcase"/></svg></span>
+              <span><strong>Empresas, peñas y eventos</strong><small>Comidas de empresa, asociaciones, encuentros</small></span>
+            </button>
+          </div>
+          <figure class="showcase-stage" id="p-show" role="tabpanel" aria-labelledby="t-com">
+            <div class="stage-frame tilt">
+              <img src="img/fotos/salon-comunion.webp" alt="Salón Diver Lauro decorado en azul para una comunión" width="1600" height="900" class="stage-img">
+              <span class="stage-shine" aria-hidden="true"></span>
+            </div>
+            <figcaption class="stage-cap"><svg class="ic"><use href="#i-spark"/></svg> <span>Comunión en azul · mesas imperiales para toda la familia</span></figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- DÍA Y NOCHE -->
+    <section class="section section-alt" id="dia-noche" aria-labelledby="dn-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="kicker reveal">Horario de día y de noche</p>
+          <h2 id="dn-title" class="reveal" style="--d:.08s">¿Merienda o fiesta <span class="script-hl">hasta tarde</span>?</h2>
+          <p class="section-lead reveal" style="--d:.16s">Diver Lauro abre de día y de noche, así que cabe cualquier plan. Dinos tu fecha y adaptamos el horario a tu celebración.</p>
+        </div>
+        <div class="dn-grid">
+          <article class="dn-card dn-day reveal tilt" style="--d:.05s">
+            <div class="dn-deco" aria-hidden="true"><span class="dn-sun"></span><i></i><i></i><i></i></div>
+            <span class="dn-badge"><svg class="ic"><use href="#i-sun"/></svg> De día</span>
+            <h3>Risas, tarta y parque de bolas</h3>
+            <ul>
+              <li><svg class="ic"><use href="#i-check"/></svg> Cumpleaños y fiestas infantiles</li>
+              <li><svg class="ic"><use href="#i-check"/></svg> Comuniones y bautizos</li>
+              <li><svg class="ic"><use href="#i-check"/></svg> Comidas familiares y de empresa</li>
+              <li><svg class="ic"><use href="#i-check"/></svg> Meriendas, baby showers y reuniones</li>
+            </ul>
+            <button class="btn btn-dark" type="button" data-set-mode="day">Ver la web en modo día <svg class="ic"><use href="#i-sun"/></svg></button>
           </article>
-          <article class="card reveal tilt" style="--d:.12s; --accent: var(--sun)">
-            <div class="card-ic"><svg class="ic"><use href="#i-heart"/></svg></div>
-            <h3>Comuniones y bautizos</h3>
-            <p>Celebra los días más especiales en familia, con espacio para comer tranquilos mientras los niños juegan a la vista.</p>
-          </article>
-          <article class="card reveal tilt" style="--d:.19s; --accent: var(--mint)">
-            <div class="card-ic"><svg class="ic"><use href="#i-users"/></svg></div>
-            <h3>Fiestas familiares</h3>
-            <p>Reuniones, aniversarios, baby showers o simplemente juntarse: un sitio cómodo donde caben todos.</p>
-          </article>
-          <article class="card reveal tilt" style="--d:.26s; --accent: var(--blue)">
-            <div class="card-ic"><svg class="ic"><use href="#i-gift"/></svg></div>
-            <h3>Eventos privados</h3>
-            <p>¿Tienes otra idea? Cuéntanosla. Adaptamos el salón a tu celebración para que salga redonda.</p>
+          <article class="dn-card dn-night reveal tilt" style="--d:.15s">
+            <div class="dn-deco" aria-hidden="true"><span class="dn-disco"></span><b></b><b></b><b></b><b></b><b></b><b></b></div>
+            <span class="dn-badge"><svg class="ic"><use href="#i-moon"/></svg> De noche</span>
+            <h3>Música, brindis y a bailar</h3>
+            <ul>
+              <li><svg class="ic"><use href="#i-check"/></svg> Despedidas de soltera y soltero</li>
+              <li><svg class="ic"><use href="#i-check"/></svg> Cumpleaños y aniversarios</li>
+              <li><svg class="ic"><use href="#i-check"/></svg> Cenas de empresa y de Navidad</li>
+              <li><svg class="ic"><use href="#i-check"/></svg> Bodas, peñas y fiestas privadas</li>
+            </ul>
+            <button class="btn btn-primary" type="button" data-set-mode="night">Ver la web en modo noche <svg class="ic"><use href="#i-moon"/></svg></button>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- INSTALACIONES -->
-    <section class="section section-dark" id="instalaciones" aria-labelledby="inst-title">
+    <!-- EL LOCAL -->
+    <section class="section" id="local" aria-labelledby="local-title">
       <div class="container">
         <div class="section-head">
-          <p class="kicker reveal">Instalaciones</p>
-          <h2 id="inst-title" class="reveal" style="--d:.08s">Todo lo que necesitas, <span class="hl hl-sun">ya está aquí</span></h2>
-          <p class="section-lead reveal" style="--d:.16s">Zona de juegos para los niños y salón equipado para los adultos, en el mismo espacio.</p>
+          <p class="kicker reveal">El local</p>
+          <h2 id="local-title" class="reveal" style="--d:.08s">Espacio para todos, <span class="script-hl">sin agobios</span></h2>
+          <p class="section-lead reveal" style="--d:.16s">Una sala diáfana y luminosa con zona de juegos, office y todo lo necesario para que tu celebración salga redonda.</p>
         </div>
-
         <div class="bento">
-          <article class="tile tile-xl reveal" style="--d:.04s">
-            <div class="tile-balls" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-            <div class="tile-body">
-              <span class="tag">La estrella de la fiesta</span>
-              <h3>Parque de bolas y tobogán</h3>
-              <p>Cientos de bolas de colores, tobogán y estructuras para trepar. Diversión asegurada de principio a fin.</p>
-            </div>
-          </article>
-          <article class="tile reveal" style="--d:.1s">
-            <svg class="ic tile-ic"><use href="#i-climb"/></svg>
-            <h3>Zona de escalada y colchonetas</h3>
-            <p>Para saltar, trepar y gastar energía de forma segura.</p>
-          </article>
-          <article class="tile reveal" style="--d:.16s">
-            <svg class="ic tile-ic"><use href="#i-game"/></svg>
-            <h3>Futbolín y pimpón</h3>
-            <p>Partidos épicos para pequeños… y no tan pequeños.</p>
-          </article>
-          <article class="tile reveal" style="--d:.22s">
-            <svg class="ic tile-ic"><use href="#i-car"/></svg>
-            <h3>Motos y coches de juguete</h3>
-            <p>Para los pilotos más pequeños de la casa.</p>
-          </article>
-          <article class="tile tile-wide reveal" style="--d:.28s">
-            <svg class="ic tile-ic"><use href="#i-snow"/></svg>
-            <div>
-              <h3>Salón climatizado</h3>
-              <p>Aire acondicionado, mesas y sillas para los invitados. Cómodo en verano y en invierno.</p>
-            </div>
-          </article>
-          <article class="tile reveal" style="--d:.34s">
-            <svg class="ic tile-ic"><use href="#i-music"/></svg>
-            <h3>Música y TV</h3>
-            <p>Pon tu lista de canciones y anima la fiesta.</p>
-          </article>
-          <article class="tile reveal" style="--d:.4s">
-            <svg class="ic tile-ic"><use href="#i-check"/></svg>
-            <h3>Neveras y dos aseos</h3>
-            <p>Todo a mano para que no falte de nada.</p>
-          </article>
+          <figure class="ph ph-xl reveal" style="--d:.04s">
+            <img src="img/fotos/parque-bolas.webp" alt="Parque de bolas con tobogán y estructuras de colores en Diver Lauro" width="1600" height="960" loading="lazy">
+            <figcaption><span class="tag">La estrella para los peques</span><strong>Parque de bolas y tobogán</strong></figcaption>
+          </figure>
+          <figure class="ph ph-wide reveal" style="--d:.1s">
+            <img src="img/fotos/salon-comunion-2.webp" alt="Salón amplio con mesas largas preparado para una celebración" width="1600" height="900" loading="lazy">
+            <figcaption><strong>Sala amplia y luminosa</strong><span>Mesas y sillas para tus invitados</span></figcaption>
+          </figure>
+          <figure class="ph reveal" style="--d:.16s">
+            <img src="img/fotos/sonido-tv-sm.webp" alt="Equipo de sonido con altavoces y televisión" width="800" height="450" loading="lazy">
+            <figcaption><strong>Sonido y TV</strong></figcaption>
+          </figure>
+          <figure class="ph reveal" style="--d:.22s">
+            <img src="img/fotos/futbolin-pimpon-sm.webp" alt="Futbolín y mesa de pimpón" width="800" height="480" loading="lazy">
+            <figcaption><strong>Futbolín y pimpón</strong></figcaption>
+          </figure>
+          <figure class="ph reveal" style="--d:.28s">
+            <img src="img/fotos/cocina-sm.webp" alt="Zona de office con frigorífico, microondas y encimera" width="800" height="480" loading="lazy">
+            <figcaption><strong>Zona de office</strong></figcaption>
+          </figure>
+          <figure class="ph reveal" style="--d:.34s">
+            <img src="img/fotos/rincon-infantil-sm.webp" alt="Rincón infantil con mesa, sillitas y pizarra" width="800" height="450" loading="lazy">
+            <figcaption><strong>Rincón infantil</strong></figcaption>
+          </figure>
+          <figure class="ph ph-wide reveal" style="--d:.4s">
+            <img src="img/fotos/boda-salon.webp" alt="Salón con mesas vestidas en lila y centros de flores" width="1600" height="1200" loading="lazy">
+            <figcaption><strong>Decóralo a tu gusto</strong><span>Cada celebración le da su propio estilo</span></figcaption>
+          </figure>
+        </div>
+        <ul class="chips reveal" style="--d:.1s" aria-label="Equipamiento">
+          <li><svg class="ic"><use href="#i-snow"/></svg> Aire acondicionado</li>
+          <li><svg class="ic"><use href="#i-speaker"/></svg> Equipo de sonido</li>
+          <li><svg class="ic"><use href="#i-music"/></svg> TV para tus vídeos y música</li>
+          <li><svg class="ic"><use href="#i-utensils"/></svg> Frigorífico y microondas</li>
+          <li><svg class="ic"><use href="#i-users"/></svg> Mesas y sillas</li>
+          <li><svg class="ic"><use href="#i-game"/></svg> Futbolín y pimpón</li>
+          <li><svg class="ic"><use href="#i-heart"/></svg> Tronas para bebés</li>
+          <li><svg class="ic"><use href="#i-check"/></svg> Aseos</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- GALERÍA -->
+    <section class="section section-alt" id="galeria" aria-labelledby="gal-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="kicker reveal">Galería</p>
+          <h2 id="gal-title" class="reveal" style="--d:.08s">Fiestas <span class="script-hl">de verdad</span></h2>
+          <p class="section-lead reveal" style="--d:.16s">Así han celebrado otras familias en Diver Lauro. Pulsa en una foto para verla en grande.</p>
+        </div>
+        <div class="filters reveal" role="group" aria-label="Filtrar galería">
+          <button type="button" class="active" data-filter="all">Todo</button>
+          <button type="button" data-filter="infantil">Infantil</button>
+          <button type="button" data-filter="comunion">Comuniones</button>
+          <button type="button" data-filter="cumple">Cumpleaños</button>
+          <button type="button" data-filter="boda">Bodas</button>
+          <button type="button" data-filter="evento">Eventos</button>
+          <button type="button" data-filter="local">El local</button>
+        </div>
+        <div class="gallery">
+          <a class="g-item" data-cat="boda" href="img/fotos/boda-presidencia.webp"><img src="img/fotos/boda-presidencia-sm.webp" alt="Mesa presidencial de boda con decoración lila y blanca" width="800" height="600" loading="lazy"></a>
+          <a class="g-item" data-cat="infantil" href="img/fotos/parque-bolas-2.webp"><img src="img/fotos/parque-bolas-2-sm.webp" alt="Parque de bolas de colores con tobogán" width="800" height="480" loading="lazy"></a>
+          <a class="g-item" data-cat="cumple" href="img/fotos/cumple-40.webp"><img src="img/fotos/cumple-40-sm.webp" alt="Salón decorado en rojo y dorado para un cumpleaños de 40" width="800" height="600" loading="lazy"></a>
+          <a class="g-item" data-cat="comunion" href="img/fotos/mesa-dulces.webp"><img src="img/fotos/mesa-dulces-sm.webp" alt="Mesa de bebidas y dulces con letras de globo para una comunión" width="800" height="450" loading="lazy"></a>
+          <a class="g-item" data-cat="boda" href="img/fotos/boda-mesa.webp"><img src="img/fotos/boda-mesa-sm.webp" alt="Mesa de boda con centros de paniculata y servilletas rosas" width="800" height="1067" loading="lazy"></a>
+          <a class="g-item" data-cat="evento" href="img/fotos/evento-cultural.webp"><img src="img/fotos/evento-cultural-sm.webp" alt="Decoración de evento cultural con banderas, guitarra y poncho" width="800" height="389" loading="lazy"></a>
+          <a class="g-item" data-cat="comunion" href="img/fotos/salon-comunion.webp"><img src="img/fotos/salon-comunion-sm.webp" alt="Mesas largas con manteles azules para una comunión" width="800" height="450" loading="lazy"></a>
+          <a class="g-item" data-cat="boda" href="img/fotos/tarta-boda.webp"><img src="img/fotos/tarta-boda-sm.webp" alt="Tarta de boda de varios pisos" width="800" height="600" loading="lazy"></a>
+          <a class="g-item" data-cat="cumple" href="img/fotos/cumple-40-mesa.webp"><img src="img/fotos/cumple-40-mesa-sm.webp" alt="Mesa de cumpleaños con globos dorados y negros" width="800" height="600" loading="lazy"></a>
+          <a class="g-item" data-cat="infantil" href="img/fotos/zona-juegos.webp"><img src="img/fotos/zona-juegos-sm.webp" alt="Zona de juegos con parque de bolas, futbolín y pimpón" width="800" height="450" loading="lazy"></a>
+          <a class="g-item" data-cat="boda" href="img/fotos/boda-dulces.webp"><img src="img/fotos/boda-dulces-sm.webp" alt="Mesa dulce lila con guirnalda Love is sweet" width="800" height="1067" loading="lazy"></a>
+          <a class="g-item" data-cat="boda" href="img/fotos/fiesta-luces.webp"><img src="img/fotos/fiesta-luces-sm.webp" alt="Mesa presidencial con cortina de luces" width="800" height="600" loading="lazy"></a>
+          <a class="g-item" data-cat="evento" href="img/fotos/evento-cultural-salon.webp"><img src="img/fotos/evento-cultural-salon-sm.webp" alt="Salón preparado para un evento con mesas largas y banderas" width="800" height="389" loading="lazy"></a>
+          <a class="g-item" data-cat="boda" href="img/fotos/boda-salon.webp"><img src="img/fotos/boda-salon-sm.webp" alt="Salón con mesas vestidas en lila para una boda" width="800" height="600" loading="lazy"></a>
+          <a class="g-item" data-cat="local" href="img/fotos/fachada.webp"><img src="img/fotos/fachada-sm.webp" alt="Fachada de Diver Lauro en Calle Crianza, Alhaurín de la Torre" width="800" height="450" loading="lazy"></a>
+          <a class="g-item" data-cat="local" href="img/fotos/futbolin-pimpon.webp"><img src="img/fotos/futbolin-pimpon-sm.webp" alt="Futbolín y mesa de pimpón en el salón" width="800" height="480" loading="lazy"></a>
+          <a class="g-item" data-cat="infantil" href="img/fotos/parque-bolas.webp"><img src="img/fotos/parque-bolas-sm.webp" alt="Estructura de juegos con tobogán y piscina de bolas" width="800" height="480" loading="lazy"></a>
+          <a class="g-item" data-cat="local" href="img/fotos/cocina.webp"><img src="img/fotos/cocina-sm.webp" alt="Zona de office con frigorífico y microondas" width="800" height="480" loading="lazy"></a>
         </div>
       </div>
     </section>
 
-    <!-- CÓMO FUNCIONA -->
-    <section class="section" aria-labelledby="steps-title">
-      <div class="container">
-        <div class="section-head">
-          <p class="kicker reveal">Así de fácil</p>
-          <h2 id="steps-title" class="reveal" style="--d:.08s">Tu fiesta en <span class="hl">3 pasos</span></h2>
+    <!-- OPINIONES -->
+    <section class="section" id="opiniones" aria-labelledby="op-title">
+      <div class="container reviews">
+        <div class="review-score reveal">
+          <p class="kicker">Opiniones</p>
+          <h2 id="op-title">Lo que dicen <span class="script-hl">en Google</span></h2>
+          <div class="score">
+            <span class="score-num" data-count="4.5" data-decimals="1">4,5</span>
+            <div>
+              <span class="rating-stars big" aria-label="4,5 de 5 estrellas"><svg class="ic"><use href="#i-star"/></svg><svg class="ic"><use href="#i-star"/></svg><svg class="ic"><use href="#i-star"/></svg><svg class="ic"><use href="#i-star"/></svg><svg class="ic half"><use href="#i-star"/></svg></span>
+              <p>Más de <strong>175 reseñas</strong> en Google</p>
+            </div>
+          </div>
+          <div class="review-actions">
+            <a class="btn btn-primary" href="https://www.google.com/maps/search/?api=1&amp;query=Diver+Lauro+Alhaur%C3%ADn+de+la+Torre" target="_blank" rel="noopener"><svg class="ic"><use href="#i-google"/></svg> Leer opiniones</a>
+            <a class="btn btn-outline" href="https://www.google.com/maps/search/?api=1&amp;query=Diver+Lauro+Alhaur%C3%ADn+de+la+Torre" target="_blank" rel="noopener">¿Celebraste aquí? Déjanos tu opinión</a>
+          </div>
         </div>
-        <ol class="steps">
-          <li class="step reveal" style="--d:.05s">
-            <span class="step-n">1</span>
-            <h3>Escríbenos</h3>
-            <p>Por WhatsApp o por teléfono. Cuéntanos qué quieres celebrar y para cuántas personas.</p>
-          </li>
-          <li class="step reveal" style="--d:.15s">
-            <span class="step-n">2</span>
-            <h3>Reserva tu fecha</h3>
-            <p>Te confirmamos disponibilidad y precio al momento, sin compromiso.</p>
-          </li>
-          <li class="step reveal" style="--d:.25s">
-            <span class="step-n">3</span>
-            <h3>¡A disfrutar!</h3>
-            <p>Llega con la tarta y las ganas. El resto, lo pone Diver Lauro.</p>
-          </li>
-        </ol>
+        <div class="praise">
+          <p class="praise-title reveal">Lo que más destacan nuestros clientes</p>
+          <ul class="praise-list">
+            <li class="reveal tilt" style="--d:.05s"><span class="praise-ic" style="--c:#2B7BE4"><svg class="ic"><use href="#i-users"/></svg></span><strong>Espacio amplio y bien cuidado</strong><span>Sitio de sobra para mesas, juegos y baile.</span></li>
+            <li class="reveal tilt" style="--d:.12s"><span class="praise-ic" style="--c:#F25C54"><svg class="ic"><use href="#i-heart"/></svg></span><strong>Trato cercano</strong><span>Dueños amables y atentos con cada fiesta.</span></li>
+            <li class="reveal tilt" style="--d:.19s"><span class="praise-ic" style="--c:#16B39A"><svg class="ic"><use href="#i-game"/></svg></span><strong>Los niños lo disfrutan</strong><span>Parque de bolas y juegos para no aburrirse.</span></li>
+            <li class="reveal tilt" style="--d:.26s"><span class="praise-ic" style="--c:#E0B526"><svg class="ic"><use href="#i-snow"/></svg></span><strong>Climatizado</strong><span>Cómodo tanto en verano como en invierno.</span></li>
+          </ul>
+          <div class="review-cards" id="review-cards" hidden></div>
+        </div>
       </div>
     </section>
 
     <!-- RESERVAR -->
-    <section class="section section-tint" id="reservar" aria-labelledby="res-title">
+    <section class="section section-alt" id="reservar" aria-labelledby="res-title">
       <div class="container reserve">
         <div class="reserve-copy">
           <p class="kicker reveal">Consulta sin compromiso</p>
-          <h2 id="res-title" class="reveal" style="--d:.08s">¿Tienes ya fecha en mente?</h2>
-          <p class="section-lead reveal" style="--d:.16s">Rellena estos datos y te abrimos WhatsApp con el mensaje listo para enviar. Te respondemos lo antes posible.</p>
+          <h2 id="res-title" class="reveal" style="--d:.08s">¿Tienes fecha? <span class="script-hl">Hablemos</span></h2>
+          <p class="section-lead reveal" style="--d:.16s">Rellena estos datos y se abrirá WhatsApp con el mensaje listo para enviar. Te contestamos lo antes posible con disponibilidad y precio.</p>
           <ul class="perks reveal" style="--d:.24s">
             <li><svg class="ic"><use href="#i-check"/></svg> Respuesta rápida por WhatsApp</li>
-            <li><svg class="ic"><use href="#i-check"/></svg> Sin compromiso</li>
-            <li><svg class="ic"><use href="#i-check"/></svg> Atención cercana y familiar</li>
+            <li><svg class="ic"><use href="#i-check"/></svg> Horario de día o de noche</li>
+            <li><svg class="ic"><use href="#i-check"/></svg> Trato cercano y familiar</li>
           </ul>
         </div>
         <form class="reserve-form reveal" style="--d:.12s" id="reserve-form" novalidate>
@@ -331,11 +454,14 @@
               <label for="f-type">Celebración</label>
               <select id="f-type" name="tipo">
                 <option>Cumpleaños infantil</option>
+                <option>Cumpleaños de adulto</option>
                 <option>Comunión</option>
                 <option>Bautizo</option>
-                <option>Fiesta familiar</option>
-                <option>Evento privado</option>
-                <option>Otro</option>
+                <option>Boda o aniversario</option>
+                <option>Despedida de soltero/a</option>
+                <option>Comida o cena de empresa</option>
+                <option>Reunión familiar</option>
+                <option>Otro evento</option>
               </select>
             </div>
             <div class="field">
@@ -343,55 +469,56 @@
               <input id="f-date" name="fecha" type="date">
             </div>
           </div>
+          <fieldset class="field seg">
+            <legend>Horario</legend>
+            <div class="seg-opts">
+              <label><input type="radio" name="horario" value="De día" checked><span><svg class="ic"><use href="#i-sun"/></svg> De día</span></label>
+              <label><input type="radio" name="horario" value="De noche"><span><svg class="ic"><use href="#i-moon"/></svg> De noche</span></label>
+            </div>
+          </fieldset>
           <div class="field-row">
+            <div class="field">
+              <label for="f-adults">Adultos (aprox.)</label>
+              <input id="f-adults" name="adultos" type="number" min="0" inputmode="numeric" placeholder="30">
+            </div>
             <div class="field">
               <label for="f-kids">Niños (aprox.)</label>
               <input id="f-kids" name="ninos" type="number" min="0" inputmode="numeric" placeholder="15">
             </div>
-            <div class="field">
-              <label for="f-adults">Adultos (aprox.)</label>
-              <input id="f-adults" name="adultos" type="number" min="0" inputmode="numeric" placeholder="20">
-            </div>
           </div>
           <div class="field">
             <label for="f-msg">¿Algo más? <span class="opt">(opcional)</span></label>
-            <textarea id="f-msg" name="mensaje" rows="3" placeholder="Horario, dudas, ideas…"></textarea>
+            <textarea id="f-msg" name="mensaje" rows="3" placeholder="Horas, ideas de decoración, dudas…"></textarea>
           </div>
-          <button class="btn btn-sun btn-lg btn-block" type="submit">
-            <svg class="ic"><use href="#i-chat"/></svg> Enviar por WhatsApp
-          </button>
-          <p class="form-note">Se abrirá WhatsApp con tu mensaje. No guardamos ningún dato en esta web.</p>
+          <button class="btn btn-primary btn-lg btn-block" type="submit"><svg class="ic"><use href="#i-chat"/></svg> Enviar por WhatsApp</button>
+          <p class="form-note">Se abrirá WhatsApp con tu mensaje. Esta web no guarda ningún dato.</p>
         </form>
       </div>
     </section>
 
     <!-- REDES -->
     <section class="section social" aria-labelledby="social-title">
-      <div class="container social-inner">
+      <div class="container">
         <div class="social-card reveal">
           <div class="social-copy">
             <p class="kicker kicker-light">Síguenos</p>
-            <h2 id="social-title">Las mejores fiestas, <br>en <span class="hl hl-sun">@diverlauro</span></h2>
-            <p>Fotos de celebraciones, decoraciones, novedades y fechas libres. Síguenos para no perderte nada.</p>
+            <h2 id="social-title">Ideas para tu fiesta en <span class="script">@diverlauro</span></h2>
+            <p>Decoraciones, celebraciones, novedades y fechas libres. Síguenos y llévate ideas para tu próxima fiesta.</p>
             <div class="social-actions">
-              <a class="btn btn-light" href="https://www.instagram.com/diverlauro/" target="_blank" rel="noopener">
-                <svg class="ic"><use href="#i-instagram"/></svg> Instagram
-              </a>
-              <a class="btn btn-ghost" href="https://www.facebook.com/Diver-Lauro-193712877866926" target="_blank" rel="noopener">
-                <svg class="ic"><use href="#i-facebook"/></svg> Facebook
-              </a>
+              <a class="btn btn-light" href="https://www.instagram.com/diverlauro/" target="_blank" rel="noopener"><svg class="ic"><use href="#i-instagram"/></svg> Instagram</a>
+              <a class="btn btn-glass" href="https://www.facebook.com/Diver-Lauro-193712877866926" target="_blank" rel="noopener"><svg class="ic"><use href="#i-facebook"/></svg> Facebook</a>
             </div>
           </div>
           <div class="phone-mock" aria-hidden="true">
             <div class="phone">
-              <div class="phone-head"><span class="avatar"></span><b>diverlauro</b></div>
+              <div class="phone-head"><img src="img/icon-192.png" alt="" width="34" height="34"><b>diverlauro</b></div>
               <div class="phone-grid">
-                <i style="--c:var(--coral)"><svg class="ic"><use href="#i-cake"/></svg></i>
-                <i style="--c:var(--sun)"><svg class="ic"><use href="#i-spark"/></svg></i>
-                <i style="--c:var(--mint)"><svg class="ic"><use href="#i-gift"/></svg></i>
-                <i style="--c:var(--blue)"><svg class="ic"><use href="#i-music"/></svg></i>
-                <i style="--c:var(--pink)"><svg class="ic"><use href="#i-heart"/></svg></i>
-                <i style="--c:var(--coral)"><svg class="ic"><use href="#i-users"/></svg></i>
+                <img src="img/fotos/cumple-40-sm.webp" alt="" loading="lazy">
+                <img src="img/fotos/parque-bolas-sm.webp" alt="" loading="lazy">
+                <img src="img/fotos/boda-presidencia-sm.webp" alt="" loading="lazy">
+                <img src="img/fotos/mesa-dulces-sm.webp" alt="" loading="lazy">
+                <img src="img/fotos/fiesta-luces-sm.webp" alt="" loading="lazy">
+                <img src="img/fotos/salon-comunion-sm.webp" alt="" loading="lazy">
               </div>
             </div>
           </div>
@@ -404,78 +531,79 @@
       <div class="container faq-wrap">
         <div class="section-head section-head-left">
           <p class="kicker reveal">Preguntas frecuentes</p>
-          <h2 id="faq-title" class="reveal" style="--d:.08s">Lo que más nos <span class="hl">preguntáis</span></h2>
+          <h2 id="faq-title" class="reveal" style="--d:.08s">Lo que más nos <span class="script-hl">preguntáis</span></h2>
           <p class="section-lead reveal" style="--d:.16s">¿No encuentras tu respuesta? Escríbenos y te ayudamos.</p>
+          <a class="btn btn-dark reveal" style="--d:.22s" href="https://wa.me/34647913022" target="_blank" rel="noopener"><svg class="ic"><use href="#i-chat"/></svg> Preguntar por WhatsApp</a>
         </div>
         <div class="faq">
           <details class="reveal" style="--d:.04s">
-            <summary>¿Dónde está Diver Lauro?<svg class="ic"><use href="#i-plus"/></svg></summary>
-            <div class="faq-a"><p>En la <strong>Calle Crianza, 30, 29130 Alhaurín de la Torre</strong> (Málaga), a pocos minutos de Málaga capital, Churriana y Alhaurín el Grande.</p></div>
+            <summary>¿Qué celebraciones se pueden hacer?<svg class="ic"><use href="#i-plus"/></svg></summary>
+            <div class="faq-a"><p>De todo: cumpleaños infantiles y de adultos, comuniones, bautizos, bodas y aniversarios, despedidas de soltero/a, comidas y cenas de empresa, reuniones familiares, peñas y eventos privados.</p></div>
           </details>
           <details class="reveal" style="--d:.08s">
-            <summary>¿Cómo reservo el salón para un cumpleaños?<svg class="ic"><use href="#i-plus"/></svg></summary>
-            <div class="faq-a"><p>Escríbenos por <a href="https://wa.me/34647913022" target="_blank" rel="noopener">WhatsApp</a> o llámanos al <a href="tel:+34647913022">647 91 30 22</a> con la fecha, el tipo de celebración y el número aproximado de invitados. Te confirmamos disponibilidad y precio.</p></div>
+            <summary>¿Se pueden hacer fiestas de noche?<svg class="ic"><use href="#i-plus"/></svg></summary>
+            <div class="faq-a"><p>Sí. Tenemos horario de día y de noche: desde una merienda infantil hasta una cena o una fiesta nocturna. Consúltanos el horario para tu fecha.</p></div>
           </details>
           <details class="reveal" style="--d:.12s">
-            <summary>¿Qué tiene el salón para los niños?<svg class="ic"><use href="#i-plus"/></svg></summary>
-            <div class="faq-a"><p>Parque de bolas, tobogán, zona de escalada, colchonetas, futbolín, mesa de pimpón y vehículos de juguete, además de un salón con mesas y sillas para los adultos.</p></div>
+            <summary>¿Cómo reservo el salón?<svg class="ic"><use href="#i-plus"/></svg></summary>
+            <div class="faq-a"><p>Escríbenos por <a href="https://wa.me/34647913022" target="_blank" rel="noopener">WhatsApp</a> o llámanos al <a href="tel:+34647913022">647 91 30 22</a> con la fecha, el horario, el tipo de celebración y el número aproximado de invitados. Te confirmamos disponibilidad y precio.</p></div>
           </details>
           <details class="reveal" style="--d:.16s">
-            <summary>¿El local está climatizado?<svg class="ic"><use href="#i-plus"/></svg></summary>
-            <div class="faq-a"><p>Sí, cuenta con aire acondicionado para que la fiesta sea cómoda en cualquier época del año.</p></div>
+            <summary>¿Qué incluye el salón?<svg class="ic"><use href="#i-plus"/></svg></summary>
+            <div class="faq-a"><p>Sala amplia con mesas y sillas, parque de bolas con tobogán, futbolín, pimpón, rincón infantil, equipo de sonido y TV, zona de office con frigorífico y microondas, tronas, aseos y aire acondicionado.</p></div>
           </details>
           <details class="reveal" style="--d:.2s">
-            <summary>¿Qué tipo de celebraciones se pueden hacer?<svg class="ic"><use href="#i-plus"/></svg></summary>
-            <div class="faq-a"><p>Cumpleaños infantiles, comuniones, bautizos, fiestas familiares, reuniones de amigos y cualquier evento privado.</p></div>
+            <summary>¿Puedo decorarlo a mi gusto?<svg class="ic"><use href="#i-plus"/></svg></summary>
+            <div class="faq-a"><p>¡Claro! Globos, manteles, mesas dulces, photocalls… Mira la <a href="#galeria">galería</a> para inspirarte y cuéntanos tu idea.</p></div>
+          </details>
+          <details class="reveal" style="--d:.24s">
+            <summary>¿Dónde está Diver Lauro?<svg class="ic"><use href="#i-plus"/></svg></summary>
+            <div class="faq-a"><p>En la <strong>Calle Crianza, 30, 29130 Alhaurín de la Torre</strong> (Málaga), a pocos minutos de Málaga capital, Churriana y Alhaurín el Grande.</p></div>
           </details>
         </div>
       </div>
     </section>
 
     <!-- CONTACTO -->
-    <section class="section section-tint" id="contacto" aria-labelledby="contact-title">
+    <section class="section section-alt" id="contacto" aria-labelledby="contact-title">
       <div class="container contact">
         <div class="contact-info">
           <p class="kicker reveal">Contacto</p>
-          <h2 id="contact-title" class="reveal" style="--d:.08s">Ven a <span class="hl">conocernos</span></h2>
+          <h2 id="contact-title" class="reveal" style="--d:.08s">Ven a <span class="script-hl">conocernos</span></h2>
+          <figure class="facade reveal" style="--d:.12s">
+            <img src="img/fotos/fachada-sm.webp" alt="Fachada de Diver Lauro con el cartel del salón" width="800" height="450" loading="lazy">
+          </figure>
           <address class="contact-list reveal" style="--d:.16s">
             <a class="contact-item" href="https://www.google.com/maps/dir/?api=1&amp;destination=36.6574069%2C-4.5781131" target="_blank" rel="noopener">
-              <span class="contact-ic" style="--c:var(--coral)"><svg class="ic"><use href="#i-pin"/></svg></span>
-              <span><small>Dirección</small>Calle Crianza, 30<br>29130 Alhaurín de la Torre, Málaga</span>
+              <span class="contact-ic" style="--c:#F25C54"><svg class="ic"><use href="#i-pin"/></svg></span>
+              <span><small>Dirección</small>Calle Crianza, 30 · 29130 Alhaurín de la Torre</span>
             </a>
             <a class="contact-item" href="tel:+34647913022">
-              <span class="contact-ic" style="--c:var(--blue)"><svg class="ic"><use href="#i-phone"/></svg></span>
-              <span><small>Teléfono</small>647 91 30 22</span>
-            </a>
-            <a class="contact-item" href="https://wa.me/34647913022" target="_blank" rel="noopener">
-              <span class="contact-ic" style="--c:var(--mint)"><svg class="ic"><use href="#i-chat"/></svg></span>
-              <span><small>WhatsApp</small>Escríbenos cuando quieras</span>
+              <span class="contact-ic" style="--c:#2B7BE4"><svg class="ic"><use href="#i-phone"/></svg></span>
+              <span><small>Teléfono y WhatsApp</small>647 91 30 22</span>
             </a>
             <a class="contact-item" href="https://www.instagram.com/diverlauro/" target="_blank" rel="noopener">
-              <span class="contact-ic" style="--c:var(--pink)"><svg class="ic"><use href="#i-instagram"/></svg></span>
+              <span class="contact-ic" style="--c:#D9479B"><svg class="ic"><use href="#i-instagram"/></svg></span>
               <span><small>Instagram</small>@diverlauro</span>
             </a>
           </address>
-          <a class="btn btn-navy reveal" style="--d:.24s" href="https://www.google.com/maps/dir/?api=1&amp;destination=36.6574069%2C-4.5781131" target="_blank" rel="noopener">
-            Cómo llegar <svg class="ic"><use href="#i-arrow"/></svg>
-          </a>
         </div>
         <div class="map reveal" style="--d:.12s">
           <iframe title="Mapa de Diver Lauro en Alhaurín de la Torre" src="https://maps.google.com/maps?q=36.6574069,-4.5781131&amp;z=16&amp;hl=es&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <a class="btn btn-primary map-btn" href="https://www.google.com/maps/dir/?api=1&amp;destination=36.6574069%2C-4.5781131" target="_blank" rel="noopener">Cómo llegar <svg class="ic"><use href="#i-arrow"/></svg></a>
         </div>
       </div>
     </section>
 
-    <!-- CTA FINAL -->
     <section class="cta" aria-labelledby="cta-title">
+      <div class="cta-confetti" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
       <div class="container cta-inner reveal">
+        <img class="cta-logo" src="img/logo.webp" alt="" width="1400" height="295" loading="lazy">
         <h2 id="cta-title">¿Montamos la fiesta?</h2>
-        <p>Escríbenos y reserva tu fecha en Diver Lauro.</p>
+        <p>De día o de noche, para 10 o para 100. Escríbenos y reserva tu fecha.</p>
         <div class="hero-actions">
-          <a class="btn btn-sun btn-lg" href="https://wa.me/34647913022?text=Hola%2C%20me%20gustar%C3%ADa%20informaci%C3%B3n%20para%20celebrar%20una%20fiesta%20en%20Diver%20Lauro" target="_blank" rel="noopener">
-            <svg class="ic"><use href="#i-chat"/></svg> Escribir por WhatsApp
-          </a>
-          <a class="btn btn-ghost btn-lg" href="tel:+34647913022"><svg class="ic"><use href="#i-phone"/></svg> Llamar</a>
+          <a class="btn btn-dark btn-lg" href="https://wa.me/34647913022?text=Hola%2C%20me%20gustar%C3%ADa%20informaci%C3%B3n%20para%20celebrar%20en%20Diver%20Lauro" target="_blank" rel="noopener"><svg class="ic"><use href="#i-chat"/></svg> Escribir por WhatsApp</a>
+          <a class="btn btn-outline-dark btn-lg" href="tel:+34647913022"><svg class="ic"><use href="#i-phone"/></svg> 647 91 30 22</a>
         </div>
       </div>
     </section>
@@ -484,15 +612,15 @@
   <footer class="footer">
     <div class="container footer-inner">
       <div>
-        <a class="brand brand-light" href="#top">
-          <span class="brand-balls" aria-hidden="true"><i></i><i></i><i></i></span>
-          <span class="brand-name">Diver<span>Lauro</span></span>
-        </a>
-        <p class="footer-text">Salón de celebraciones y parque infantil en Alhaurín de la Torre, Málaga.</p>
+        <img class="footer-logo" src="img/logo-yellow.webp" alt="Diver Lauro" width="1400" height="295" loading="lazy">
+        <p class="footer-text">Salón de celebraciones en Alhaurín de la Torre, Málaga. Cumpleaños, comuniones, bodas, despedidas y eventos, de día y de noche.</p>
       </div>
       <nav class="footer-nav" aria-label="Pie de página">
         <a href="#celebraciones">Celebraciones</a>
-        <a href="#instalaciones">Instalaciones</a>
+        <a href="#dia-noche">Día y noche</a>
+        <a href="#local">El local</a>
+        <a href="#galeria">Galería</a>
+        <a href="#opiniones">Opiniones</a>
         <a href="#reservar">Reservar</a>
         <a href="#preguntas">Preguntas</a>
         <a href="#contacto">Contacto</a>
@@ -504,14 +632,22 @@
       </div>
     </div>
     <div class="container footer-bottom">
-      <p>© <span id="year">2026</span> Diver Lauro · Calle Crianza, 30 · 29130 Alhaurín de la Torre (Málaga)</p>
+      <p>© <span id="year">2026</span> Diver Lauro · Calle Crianza, 30 · 29130 Alhaurín de la Torre (Málaga) · 647 91 30 22</p>
     </div>
   </footer>
 
-  <a class="wa-float" href="https://wa.me/34647913022?text=Hola%2C%20me%20gustar%C3%ADa%20informaci%C3%B3n%20para%20celebrar%20una%20fiesta%20en%20Diver%20Lauro" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp">
+  <a class="wa-float" href="https://wa.me/34647913022?text=Hola%2C%20me%20gustar%C3%ADa%20informaci%C3%B3n%20para%20celebrar%20en%20Diver%20Lauro" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp">
     <svg class="ic"><use href="#i-chat"/></svg>
   </a>
 
+  <dialog class="lightbox" id="lightbox" aria-label="Foto ampliada">
+    <button class="lb-btn lb-close" type="button" aria-label="Cerrar"><svg class="ic"><use href="#i-close"/></svg></button>
+    <button class="lb-btn lb-prev" type="button" aria-label="Foto anterior"><svg class="ic"><use href="#i-left"/></svg></button>
+    <figure><img alt=""><figcaption></figcaption></figure>
+    <button class="lb-btn lb-next" type="button" aria-label="Foto siguiente"><svg class="ic"><use href="#i-right"/></svg></button>
+  </dialog>
+
   <script src="js/main.js" defer></script>
+  <script type="module" src="js/scene.js"></script>
 </body>
 </html>

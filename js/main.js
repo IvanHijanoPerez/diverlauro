@@ -1,20 +1,45 @@
 /* Diver Lauro · interacciones */
+
+/* ===== Opiniones reales de Google =====
+   Para mostrar reseñas, añádelas aquí copiándolas tal cual de Google:
+   { autor: "Nombre", texto: "Texto de la reseña", estrellas: 5 }
+   Si la lista está vacía, la web solo muestra la valoración media. */
+const REVIEWS = [];
+
 (() => {
   const WHATSAPP = "34647913022";
+  const root = document.documentElement;
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const $ = (s, el = document) => el.querySelector(s);
   const $$ = (s, el = document) => [...el.querySelectorAll(s)];
 
-  /* ---------- Año del footer ---------- */
   const year = $("#year");
   if (year) year.textContent = new Date().getFullYear();
 
-  /* ---------- Cabecera al hacer scroll + botón WhatsApp ---------- */
+  /* ---------- Modo día / noche ---------- */
+  const themeMeta = $('meta[name="theme-color"]');
+  const modeBtn = $("[data-mode-toggle]");
+  const applyMode = (mode, save = true) => {
+    root.dataset.mode = mode;
+    if (save) { try { localStorage.setItem("dl-mode", mode); } catch (e) {} }
+    themeMeta && themeMeta.setAttribute("content", mode === "night" ? "#070F26" : "#EBD450");
+    modeBtn && modeBtn.setAttribute("aria-label", mode === "night" ? "Cambiar a modo día" : "Cambiar a modo noche");
+    $$("[data-set-mode]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.setMode === mode)));
+    window.dispatchEvent(new CustomEvent("dl:mode", { detail: mode }));
+  };
+  applyMode(root.dataset.mode || "day", false);
+  modeBtn && modeBtn.addEventListener("click", () => applyMode(root.dataset.mode === "night" ? "day" : "night"));
+  $$("[data-set-mode]").forEach((b) => b.addEventListener("click", () => {
+    applyMode(b.dataset.setMode);
+    if (b.closest(".dn-card")) document.querySelector(".hero").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
+  }));
+
+  /* ---------- Cabecera + botón WhatsApp ---------- */
   const header = $(".site-header");
   const waFloat = $(".wa-float");
   const onScroll = () => {
     const y = window.scrollY;
-    header.classList.toggle("scrolled", y > 40);
+    header.classList.toggle("scrolled", y > 30);
     waFloat.classList.toggle("show", y > window.innerHeight * 0.6);
   };
   onScroll();
@@ -31,17 +56,14 @@
   $$("#nav a").forEach((a) => a.addEventListener("click", () => setMenu(false)));
   document.addEventListener("keydown", (e) => e.key === "Escape" && setMenu(false));
 
-  /* ---------- Enlace activo en la navegación ---------- */
+  /* ---------- Enlace activo ---------- */
   const navLinks = $$('.nav a[href^="#"]');
-  const sections = navLinks.map((a) => $(a.getAttribute("href"))).filter(Boolean);
   const spy = new IntersectionObserver((entries) => {
     entries.forEach((en) => {
-      if (en.isIntersecting) {
-        navLinks.forEach((a) => a.classList.toggle("active", a.getAttribute("href") === "#" + en.target.id));
-      }
+      if (en.isIntersecting) navLinks.forEach((a) => a.classList.toggle("active", a.getAttribute("href") === "#" + en.target.id));
     });
   }, { rootMargin: "-45% 0px -50% 0px" });
-  sections.forEach((s) => spy.observe(s));
+  navLinks.map((a) => $(a.getAttribute("href"))).filter(Boolean).forEach((s) => spy.observe(s));
 
   /* ---------- Aparición al hacer scroll ---------- */
   const reveals = $$(".reveal");
@@ -49,47 +71,178 @@
     reveals.forEach((el) => el.classList.add("is-visible"));
   } else {
     const io = new IntersectionObserver((entries) => {
-      entries.forEach((en) => {
-        if (en.isIntersecting) { en.target.classList.add("is-visible"); io.unobserve(en.target); }
-      });
+      entries.forEach((en) => { if (en.isIntersecting) { en.target.classList.add("is-visible"); io.unobserve(en.target); } });
     }, { threshold: 0.12, rootMargin: "0px 0px -6% 0px" });
     reveals.forEach((el) => io.observe(el));
   }
 
   /* ---------- Contadores ---------- */
-  $$("[data-count]").forEach((el) => {
-    const target = parseFloat(el.dataset.count);
-    const dec = parseInt(el.dataset.decimals || "0", 10);
-    const fmt = (n) => n.toFixed(dec).replace(".", ",");
-    if (reduceMotion) { el.textContent = fmt(target); return; }
-    el.textContent = fmt(0);
-    const start = performance.now() + 500, dur = 1600;
-    const tick = (t) => {
-      const p = Math.min(Math.max((t - start) / dur, 0), 1);
-      el.textContent = fmt(target * (1 - Math.pow(1 - p, 4)));
-      if (p < 1) requestAnimationFrame(tick);
-    };
-    requestAnimationFrame(tick);
+  const counterIO = new IntersectionObserver((entries) => {
+    entries.forEach((en) => {
+      if (!en.isIntersecting) return;
+      counterIO.unobserve(en.target);
+      const el = en.target, target = parseFloat(el.dataset.count), dec = parseInt(el.dataset.decimals || "0", 10);
+      const fmt = (n) => n.toFixed(dec).replace(".", ",");
+      if (reduceMotion) { el.textContent = fmt(target); return; }
+      const start = performance.now() + 300, dur = 1500;
+      const tick = (t) => {
+        const p = Math.min(Math.max((t - start) / dur, 0), 1);
+        el.textContent = fmt(target * (1 - Math.pow(1 - p, 4)));
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      el.textContent = fmt(0);
+      requestAnimationFrame(tick);
+    });
   });
+  $$("[data-count]").forEach((el) => counterIO.observe(el));
 
-  /* ---------- Inclinación 3D de tarjetas ---------- */
+  /* ---------- Inclinación 3D ---------- */
   if (!reduceMotion && window.matchMedia("(hover: hover)").matches) {
     $$(".tilt").forEach((card) => {
+      const max = card.classList.contains("stage-frame") ? 6 : 8;
       card.addEventListener("pointermove", (e) => {
         const r = card.getBoundingClientRect();
-        const x = (e.clientX - r.left) / r.width - 0.5;
-        const y = (e.clientY - r.top) / r.height - 0.5;
-        card.style.transform = `perspective(800px) rotateX(${(-y * 8).toFixed(2)}deg) rotateY(${(x * 10).toFixed(2)}deg) translateY(-6px)`;
+        const x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
+        card.style.transform = `perspective(900px) rotateX(${(-y * max).toFixed(2)}deg) rotateY(${(x * max * 1.2).toFixed(2)}deg) translateY(-4px)`;
+        card.style.setProperty("--mx", `${((x + 0.5) * 100).toFixed(1)}%`);
+        card.style.setProperty("--my", `${((y + 0.5) * 100).toFixed(1)}%`);
       });
       card.addEventListener("pointerleave", () => { card.style.transform = ""; });
     });
   }
 
+  /* ---------- Showcase de celebraciones ---------- */
+  const tabs = $$('.showcase-tabs [role="tab"]');
+  const stageImg = $(".stage-img");
+  const stageCap = $(".stage-cap span");
+  const panel = $("#p-show");
+  let tabTimer, autoplay = true;
+  const selectTab = (tab, focus = false) => {
+    if (tab.getAttribute("aria-selected") === "true") return;
+    tabs.forEach((t) => { t.setAttribute("aria-selected", String(t === tab)); t.tabIndex = t === tab ? 0 : -1; });
+    panel.setAttribute("aria-labelledby", tab.id);
+    if (focus) tab.focus();
+    const src = `img/fotos/${tab.dataset.img}.webp`;
+    const pre = new Image();
+    pre.src = src;
+    stageImg.classList.add("swap");
+    const swap = () => {
+      setTimeout(() => {
+        stageImg.src = src;
+        stageImg.alt = tab.dataset.cap;
+        stageImg.width = +tab.dataset.w; stageImg.height = +tab.dataset.h;
+        stageCap.textContent = tab.dataset.cap;
+        requestAnimationFrame(() => stageImg.classList.remove("swap"));
+      }, reduceMotion ? 0 : 280);
+    };
+    pre.decode ? pre.decode().then(swap, swap) : (pre.onload = swap);
+  };
+  tabs.forEach((t, i) => {
+    t.tabIndex = i === 0 ? 0 : -1;
+    t.addEventListener("click", () => { autoplay = false; selectTab(t); });
+    t.addEventListener("keydown", (e) => {
+      const d = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[e.key];
+      if (!d) return;
+      e.preventDefault(); autoplay = false;
+      selectTab(tabs[(i + d + tabs.length) % tabs.length], true);
+    });
+  });
+  // rotación automática hasta que el usuario toque una pestaña
+  if (!reduceMotion && tabs.length) {
+    const showIO = new IntersectionObserver(([en]) => {
+      clearInterval(tabTimer);
+      if (en.isIntersecting && autoplay) {
+        tabTimer = setInterval(() => {
+          if (!autoplay) return clearInterval(tabTimer);
+          const i = tabs.findIndex((t) => t.getAttribute("aria-selected") === "true");
+          selectTab(tabs[(i + 1) % tabs.length]);
+        }, 4200);
+      }
+    }, { threshold: 0.4 });
+    showIO.observe($(".showcase"));
+  }
+
+  /* ---------- Galería: filtros ---------- */
+  const items = $$(".g-item");
+  $$(".filters button").forEach((btn) => btn.addEventListener("click", () => {
+    $$(".filters button").forEach((b) => b.classList.toggle("active", b === btn));
+    const f = btn.dataset.filter;
+    items.forEach((it, i) => {
+      const show = f === "all" || it.dataset.cat === f;
+      it.classList.toggle("hide", !show);
+      it.classList.remove("pop");
+      if (show && !reduceMotion) { void it.offsetWidth; it.style.animationDelay = `${(i % 8) * 40}ms`; it.classList.add("pop"); }
+    });
+  }));
+
+  /* ---------- Galería: visor ---------- */
+  const lb = $("#lightbox");
+  if (lb && typeof lb.showModal === "function") {
+    const lbImg = $("img", lb), lbCap = $("figcaption", lb);
+    let current = 0;
+    const visible = () => items.filter((it) => !it.classList.contains("hide"));
+    const show = (idx) => {
+      const list = visible();
+      current = (idx + list.length) % list.length;
+      const it = list[current], img = $("img", it);
+      lbImg.src = it.getAttribute("href");
+      lbImg.alt = img.alt;
+      lbCap.textContent = img.alt;
+      lbImg.style.animation = "none"; void lbImg.offsetWidth; lbImg.style.animation = "";
+    };
+    items.forEach((it) => it.addEventListener("click", (e) => {
+      e.preventDefault();
+      show(visible().indexOf(it));
+      lb.showModal();
+      document.body.style.overflow = "hidden";
+    }));
+    lb.addEventListener("close", () => { document.body.style.overflow = ""; });
+    $(".lb-close", lb).addEventListener("click", () => lb.close());
+    $(".lb-prev", lb).addEventListener("click", () => show(current - 1));
+    $(".lb-next", lb).addEventListener("click", () => show(current + 1));
+    lb.addEventListener("click", (e) => { if (e.target === lb || e.target.tagName === "FIGURE") lb.close(); });
+    lb.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft") show(current - 1);
+      if (e.key === "ArrowRight") show(current + 1);
+    });
+    let sx = null;
+    lb.addEventListener("touchstart", (e) => { sx = e.touches[0].clientX; }, { passive: true });
+    lb.addEventListener("touchend", (e) => {
+      if (sx === null) return;
+      const dx = e.changedTouches[0].clientX - sx;
+      if (Math.abs(dx) > 50) show(current + (dx < 0 ? 1 : -1));
+      sx = null;
+    });
+  }
+
+  /* ---------- Opiniones ---------- */
+  const rc = $("#review-cards");
+  if (rc && REVIEWS.length) {
+    const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+    rc.innerHTML = REVIEWS.map((r) => `
+      <figure class="review-card reveal is-visible">
+        <span class="rating-stars" aria-label="${r.estrellas || 5} estrellas">${'<svg class="ic"><use href="#i-star"/></svg>'.repeat(r.estrellas || 5)}</span>
+        <blockquote>“${esc(r.texto)}”</blockquote>
+        <figcaption>${esc(r.autor)} · reseña de Google</figcaption>
+      </figure>`).join("");
+    rc.hidden = false;
+  }
+
   /* ---------- Formulario → WhatsApp ---------- */
   const form = $("#reserve-form");
   if (form) {
-    const dateInput = $("#f-date");
-    dateInput.min = new Date().toISOString().slice(0, 10);
+    $("#f-date").min = new Date().toISOString().slice(0, 10);
+    // el horario del formulario sigue al modo día/noche hasta que el usuario lo elija
+    let horarioTocado = false;
+    $$('input[name="horario"]', form).forEach((r) => r.addEventListener("change", () => { horarioTocado = true; }));
+    const syncHorario = (mode) => {
+      if (horarioTocado) return;
+      const r = $(`input[name="horario"][value="${mode === "night" ? "De noche" : "De día"}"]`, form);
+      if (r) r.checked = true;
+    };
+    syncHorario(root.dataset.mode);
+    window.addEventListener("dl:mode", (e) => syncHorario(e.detail));
+
     form.addEventListener("submit", (e) => {
       e.preventDefault();
       const name = $("#f-name");
@@ -100,159 +253,17 @@
       }
       name.classList.remove("invalid");
       const d = Object.fromEntries(new FormData(form));
-      let fecha = "";
-      if (d.fecha) {
-        fecha = new Date(d.fecha + "T12:00:00").toLocaleDateString("es-ES", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
-      }
+      const fecha = d.fecha ? new Date(d.fecha + "T12:00:00").toLocaleDateString("es-ES", { weekday: "long", day: "numeric", month: "long", year: "numeric" }) : "";
       const lines = [
         `¡Hola! Soy ${d.nombre.trim()} y me gustaría información para celebrar en Diver Lauro.`,
         `• Celebración: ${d.tipo}`,
         fecha && `• Fecha: ${fecha}`,
-        d.ninos && `• Niños: ${d.ninos}`,
+        d.horario && `• Horario: ${d.horario}`,
         d.adultos && `• Adultos: ${d.adultos}`,
+        d.ninos && `• Niños: ${d.ninos}`,
         d.mensaje && d.mensaje.trim() && `• Comentarios: ${d.mensaje.trim()}`,
       ].filter(Boolean);
       window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(lines.join("\n"))}`, "_blank", "noopener");
-    });
-  }
-
-  /* ---------- Parque de bolas interactivo (hero) ---------- */
-  const canvas = $(".ballpit");
-  if (!canvas) return;
-  const hero = canvas.parentElement;
-  const ctx = canvas.getContext("2d");
-  const COLORS = ["#FFC93C", "#FF6B5E", "#22CFA0", "#2F6BFF", "#FF5FA2", "#FFFFFF"];
-  const G = 0.38, BOUNCE = 0.42, FRICTION = 0.995;
-  let W = 0, H = 0, DPR = 1, balls = [], running = false, visible = true;
-  const pointer = { x: -999, y: -999, vx: 0, vy: 0, active: false };
-
-  const rand = (a, b) => a + Math.random() * (b - a);
-  const makeBall = (x, y) => {
-    const small = W < 640;
-    const r = small ? rand(13, 24) : rand(18, 36);
-    return { x: x ?? rand(r, W - r), y: y ?? rand(-H * 1.2, -r), vx: rand(-1.5, 1.5), vy: rand(0, 2), r, c: COLORS[(Math.random() * COLORS.length) | 0] };
-  };
-
-  const resize = () => {
-    const rect = hero.getBoundingClientRect();
-    DPR = Math.min(window.devicePixelRatio || 1, 2);
-    W = rect.width; H = rect.height;
-    canvas.width = W * DPR; canvas.height = H * DPR;
-    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-    const target = Math.round(Math.min(90, Math.max(28, W / 22)));
-    while (balls.length < target) balls.push(makeBall());
-    if (balls.length > target + 30) balls.length = target + 30;
-    balls.forEach((b) => { b.x = Math.min(Math.max(b.x, b.r), W - b.r); });
-  };
-
-  const step = () => {
-    const n = balls.length;
-    for (let i = 0; i < n; i++) {
-      const b = balls[i];
-      b.vy += G; b.vx *= FRICTION; b.vy *= FRICTION;
-      // empuje del puntero
-      if (pointer.active) {
-        const dx = b.x - pointer.x, dy = b.y - pointer.y;
-        const dist = Math.hypot(dx, dy), reach = b.r + 60;
-        if (dist < reach && dist > 0.01) {
-          const f = (1 - dist / reach) * 2.2;
-          b.vx += (dx / dist) * f + pointer.vx * 0.08;
-          b.vy += (dy / dist) * f + pointer.vy * 0.08;
-        }
-      }
-      b.x += b.vx; b.y += b.vy;
-      if (b.y > H - b.r) { b.y = H - b.r; b.vy *= -BOUNCE; b.vx *= 0.96; if (Math.abs(b.vy) < 0.6) b.vy = 0; }
-      if (b.x < b.r) { b.x = b.r; b.vx = Math.abs(b.vx) * BOUNCE; }
-      if (b.x > W - b.r) { b.x = W - b.r; b.vx = -Math.abs(b.vx) * BOUNCE; }
-    }
-    // colisiones entre bolas (2 pasadas para estabilidad)
-    for (let k = 0; k < 2; k++) {
-      for (let i = 0; i < n; i++) {
-        const a = balls[i];
-        for (let j = i + 1; j < n; j++) {
-          const b = balls[j];
-          const dx = b.x - a.x, dy = b.y - a.y, min = a.r + b.r;
-          const d2 = dx * dx + dy * dy;
-          if (d2 >= min * min || d2 === 0) continue;
-          const d = Math.sqrt(d2), nx = dx / d, ny = dy / d, overlap = (min - d) / 2;
-          a.x -= nx * overlap; a.y -= ny * overlap;
-          b.x += nx * overlap; b.y += ny * overlap;
-          const rel = (b.vx - a.vx) * nx + (b.vy - a.vy) * ny;
-          if (rel < 0) {
-            const imp = -(1 + BOUNCE) * rel / 2;
-            a.vx -= imp * nx; a.vy -= imp * ny;
-            b.vx += imp * nx; b.vy += imp * ny;
-          }
-        }
-      }
-    }
-    pointer.vx *= 0.8; pointer.vy *= 0.8;
-  };
-
-  const draw = () => {
-    ctx.clearRect(0, 0, W, H);
-    for (const b of balls) {
-      if (b.y < -b.r) continue;
-      const g = ctx.createRadialGradient(b.x - b.r * 0.35, b.y - b.r * 0.4, b.r * 0.1, b.x, b.y, b.r);
-      g.addColorStop(0, "rgba(255,255,255,.75)");
-      g.addColorStop(0.28, b.c);
-      g.addColorStop(1, shade(b.c));
-      ctx.beginPath();
-      ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
-      ctx.fillStyle = g;
-      ctx.fill();
-    }
-  };
-
-  const shadeCache = {};
-  function shade(hex) {
-    if (shadeCache[hex]) return shadeCache[hex];
-    const n = parseInt(hex.slice(1), 16);
-    const f = 0.68;
-    const r = ((n >> 16) & 255) * f, g = ((n >> 8) & 255) * f, b = (n & 255) * f;
-    return (shadeCache[hex] = `rgb(${r | 0},${g | 0},${b | 0})`);
-  }
-
-  const loop = () => {
-    if (!running) return;
-    step(); draw();
-    requestAnimationFrame(loop);
-  };
-  const start = () => { if (!running && visible && !document.hidden) { running = true; requestAnimationFrame(loop); } };
-  const stop = () => { running = false; };
-
-  resize();
-  if (reduceMotion) {
-    // sin animación: colocamos las bolas ya apiladas y dibujamos una vez
-    balls.forEach((b) => { b.y = H - b.r - Math.random() * 60; });
-    for (let i = 0; i < 400; i++) step();
-    draw();
-  } else {
-    start();
-  }
-
-  let rT;
-  window.addEventListener("resize", () => { clearTimeout(rT); rT = setTimeout(() => { resize(); if (reduceMotion) draw(); }, 120); });
-  new IntersectionObserver(([en]) => { visible = en.isIntersecting; visible && !reduceMotion ? start() : stop(); }).observe(hero);
-  document.addEventListener("visibilitychange", () => (document.hidden ? stop() : !reduceMotion && start()));
-
-  if (!reduceMotion) {
-    const toLocal = (e) => { const r = canvas.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; };
-    hero.addEventListener("pointermove", (e) => {
-      const p = toLocal(e);
-      if (pointer.active) { pointer.vx = p.x - pointer.x; pointer.vy = p.y - pointer.y; }
-      pointer.x = p.x; pointer.y = p.y; pointer.active = true;
-    });
-    hero.addEventListener("pointerleave", () => { pointer.active = false; });
-    hero.addEventListener("pointerdown", (e) => {
-      if (e.target.closest("a, button")) return;
-      const p = toLocal(e);
-      // ¡lanza una bola nueva!
-      const b = makeBall(p.x, p.y);
-      b.vy = rand(-10, -6); b.vx = rand(-4, 4);
-      balls.push(b);
-      if (balls.length > 160) balls.shift();
-      const hint = $(".hero-hint"); if (hint) hint.style.opacity = "0";
     });
   }
 })();

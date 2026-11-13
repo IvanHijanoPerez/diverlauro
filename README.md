@@ -1,27 +1,31 @@
 # Diver Lauro · Web oficial
 
-Web del salón de celebraciones y parque infantil **Diver Lauro**, en Calle Crianza 30, Alhaurín de la Torre (Málaga).
+Web del salón de celebraciones **Diver Lauro**, en Calle Crianza 30, Alhaurín de la Torre (Málaga): cumpleaños, comuniones, bautizos, bodas, despedidas, comidas de empresa y eventos, de día y de noche.
 
-Web estática (HTML + CSS + JS, sin dependencias): rápida y responsive. Publicada en https://diverlauro.pages.dev/
+Web estática (HTML + CSS + JS, sin compilación). Publicada en https://diverlauro.pages.dev/
 
 ## Qué incluye
 
-- Hero con **parque de bolas interactivo** (las bolas caen, se apilan y se pueden empujar o lanzar con el ratón o el dedo).
-- Secciones: celebraciones, instalaciones, cómo reservar, formulario de consulta, redes sociales, preguntas frecuentes, contacto con mapa.
-- **Formulario → WhatsApp**: el cliente rellena nombre, fecha, tipo de evento e invitados y se abre WhatsApp con el mensaje ya escrito. No hace falta servidor ni se guardan datos.
-- Botón flotante de WhatsApp, menú móvil animado, animaciones al hacer scroll y respeto a "reducir movimiento".
-- **SEO local**: título y descripción optimizados para "salón de celebraciones Alhaurín de la Torre", datos estructurados `LocalBusiness` + `FAQPage` (schema.org), Open Graph para que el enlace se vea bien en WhatsApp/Instagram/Facebook, `sitemap.xml`, `robots.txt`, coordenadas geográficas.
+- **Identidad de la marca**: amarillo `#EBD450` + azul marino `#0D305D` y el logo original a pincel.
+- **Modo día / noche**: interruptor en la cabecera y en el hero. De día, tonos amarillos y globos de colores; de noche, fondo oscuro, neones, globos metalizados, bola de discoteca y focos. Se elige solo según la hora del visitante (noche de 20:00 a 7:00) y recuerda su elección.
+- **Escena 3D** en el hero con [Three.js](https://threejs.org/) (cargado desde CDN): globos que se pueden explotar con un toque (sueltan confeti), confeti cayendo y paralaje con el ratón. En móvil va más ligera; si el navegador no tiene WebGL se ve el fondo normal.
+- **Fotos reales** del local y de celebraciones (optimizadas en `.webp`, sin datos GPS del móvil):
+  - Selector "Un salón, mil celebraciones" (comunión, cumpleaños, boda, noche, eventos).
+  - Bento del local (parque de bolas, sala, sonido, futbolín, office, rincón infantil).
+  - Galería con filtros y visor a pantalla completa (teclado y deslizar en móvil).
+- **Opiniones**: valoración de Google (4,5 · 175 reseñas) y lo que más destacan los clientes. Se pueden mostrar reseñas reales (ver abajo).
+- **Formulario → WhatsApp** con tipo de celebración, fecha, horario (día/noche) e invitados. No necesita servidor ni guarda datos.
+- **SEO local**: título/descripción para "salón de celebraciones Alhaurín de la Torre", datos estructurados `LocalBusiness` + `EventVenue` + `FAQPage`, Open Graph con imagen propia, `sitemap.xml`, `robots.txt`, coordenadas.
 
 ## Estructura
 
 ```
-index.html          Página principal (todo el contenido y el SEO)
-css/styles.css      Estilos y animaciones
-js/main.js          Interacciones (menú, animaciones, parque de bolas, formulario)
-img/                Favicon, iconos e imagen para redes (og-image.png)
-sitemap.xml         Mapa del sitio para Google
-robots.txt          Permisos para buscadores
-404.html            Página de error
+index.html          Página principal (contenido y SEO)
+css/styles.css      Estilos, modo día/noche y animaciones
+js/main.js          Interacciones (modo, menú, galería, formulario, opiniones)
+js/scene.js         Escena 3D del hero (Three.js)
+img/fotos/          Fotos del local (nombre.webp = grande, nombre-sm.webp = miniatura)
+img/                Logo (azul, amarillo, blanco), iconos e imagen para redes (og-image.jpg)
 ```
 
 ## Cambiar datos
@@ -34,17 +38,29 @@ Todo está en `index.html`. Busca y reemplaza:
 | Instagram | `https://www.instagram.com/diverlauro/` |
 | Facebook | `https://www.facebook.com/Diver-Lauro-193712877866926` |
 | Dirección | `Calle Crianza, 30 · 29130 Alhaurín de la Torre` |
-| Valoración Google | `4,5` y `175` reseñas (en el hero) |
+| Valoración Google | `4,5` y `175` reseñas |
 
 El número de WhatsApp del formulario está también en `js/main.js` (`WHATSAPP`).
 
-### Añadir fotos reales
+### Añadir reseñas reales de Google
 
-Las fotos reales del salón y de fiestas ayudan mucho (a los clientes y a Google). Guárdalas en `img/` en formato `.webp` o `.jpg` (máx. ~300 KB cada una) y añádelas con un texto `alt` descriptivo, p. ej.:
+En `js/main.js`, al principio, rellena la lista `REVIEWS` copiando reseñas **tal cual** de Google:
+
+```js
+const REVIEWS = [
+  { autor: "María G.", texto: "Texto exacto de la reseña…", estrellas: 5 },
+];
+```
+
+### Añadir fotos
+
+Guarda dos versiones en `img/fotos/` (`nombre.webp` de ~1600 px y `nombre-sm.webp` de ~800 px) y copia un bloque de la galería en `index.html`:
 
 ```html
-<img src="img/parque-de-bolas.webp" alt="Parque de bolas de Diver Lauro en Alhaurín de la Torre" loading="lazy" width="800" height="600">
+<a class="g-item" data-cat="cumple" href="img/fotos/nombre.webp"><img src="img/fotos/nombre-sm.webp" alt="Descripción de la foto" width="800" height="600" loading="lazy"></a>
 ```
+
+`data-cat` puede ser `infantil`, `comunion`, `cumple`, `boda`, `evento` o `local`.
 
 ## Publicación (Cloudflare Pages)
 
