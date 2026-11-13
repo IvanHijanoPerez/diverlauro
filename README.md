@@ -2,7 +2,7 @@
 
 Web del salón de celebraciones y parque infantil **Diver Lauro**, en Calle Crianza 30, Alhaurín de la Torre (Málaga).
 
-Web estática (HTML + CSS + JS, sin dependencias): rápida, responsive y lista para GitHub Pages.
+Web estática (HTML + CSS + JS, sin dependencias): rápida y responsive. Publicada en https://diverlauro.pages.dev/
 
 ## Qué incluye
 
@@ -46,18 +46,22 @@ Las fotos reales del salón y de fiestas ayudan mucho (a los clientes y a Google
 <img src="img/parque-de-bolas.webp" alt="Parque de bolas de Diver Lauro en Alhaurín de la Torre" loading="lazy" width="800" height="600">
 ```
 
-## Publicar con GitHub Pages
+## Publicación (Cloudflare Pages)
 
-1. En GitHub: **Settings → Pages → Build and deployment → Deploy from a branch → `main` / `(root)`**.
-2. En 1–2 minutos estará en `https://ivanhijanoperez.github.io/diverlauro/`.
+La web está publicada en **https://diverlauro.pages.dev/** con Cloudflare Pages, conectado a este repositorio:
+cada `git push` a `main` se publica solo en 1–2 minutos.
+
+Configuración del proyecto en Cloudflare: *Framework preset* `None`, *Build command* vacío, *Build output directory* `/`.
+
+Recomendado: activar **Web Analytics** en Cloudflare para ver las visitas.
 
 ### Dominio propio (recomendado)
 
-Con un dominio tipo `diverlauro.es` (~10 €/año) se posiciona mejor y da más confianza:
+Con un dominio tipo `diverlauro.es` se posiciona mejor y da más confianza:
 
-1. Compra el dominio y crea en tu proveedor un registro `CNAME` `www` → `ivanhijanoperez.github.io` (y los registros `A` del dominio raíz a las IP de GitHub Pages).
-2. En **Settings → Pages → Custom domain** escribe `www.diverlauro.es` y activa **Enforce HTTPS**.
-3. Reemplaza en `index.html`, `sitemap.xml` y `robots.txt` todas las apariciones de `https://ivanhijanoperez.github.io/diverlauro/` por `https://www.diverlauro.es/`, y en `404.html` cambia `/diverlauro/` por `/`.
+1. Compra el dominio (DonDominio, Dinahosting…) y cambia sus *nameservers* a los que indique Cloudflare (**Add a domain** en el panel).
+2. En Cloudflare: **Workers & Pages → diverlauro → Custom domains → Set up a custom domain** → `www.diverlauro.es` y `diverlauro.es`.
+3. Reemplaza en `index.html`, `sitemap.xml` y `robots.txt` todas las apariciones de `https://diverlauro.pages.dev/` por `https://www.diverlauro.es/`.
 
 ## Para salir el primero en Google (lo más importante)
 
