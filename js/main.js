@@ -34,6 +34,39 @@ const REVIEWS = [];
     if (b.closest(".dn-card")) document.querySelector(".hero").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
   }));
 
+  /* ---------- Globos del hero (CSS, se explotan al tocarlos) ---------- */
+  const hero = $(".hero");
+  const fx = $(".hero-fx");
+  if (hero && fx) {
+    // pausa las animaciones cuando el hero no se ve (ahorra batería)
+    new IntersectionObserver(([en]) => hero.classList.toggle("fx-paused", !en.isIntersecting)).observe(hero);
+    const hint = $(".hero-hint");
+    $$(".balloon", fx).forEach((b) => {
+      b.addEventListener("pointerdown", () => {
+        if (b.classList.contains("pop")) return;
+        if (hint) hint.style.opacity = "0";
+        const color = getComputedStyle(b.firstElementChild).backgroundColor;
+        b.classList.add("pop");
+        if (!reduceMotion) {
+          const r = b.getBoundingClientRect(), f = fx.getBoundingClientRect();
+          for (let i = 0; i < 12; i++) {
+            const piece = document.createElement("i");
+            const a = (i / 12) * Math.PI * 2, d = 50 + Math.random() * 70;
+            piece.className = "burst";
+            piece.style.cssText = `left:${r.left - f.left + r.width / 2}px;top:${r.top - f.top + r.height / 2}px;background:${i % 3 ? color : "var(--yellow)"};--tx:${Math.cos(a) * d}px;--ty:${Math.sin(a) * d + 30}px;--r:${Math.random() * 540}deg`;
+            fx.appendChild(piece);
+            piece.addEventListener("animationend", () => piece.remove());
+          }
+        }
+        setTimeout(() => {
+          b.classList.remove("pop");
+          b.style.setProperty("--delay", "0s");
+          b.style.animation = "none"; void b.offsetWidth; b.style.animation = "";
+        }, 2200);
+      });
+    });
+  }
+
   /* ---------- Cabecera + botón WhatsApp ---------- */
   const header = $(".site-header");
   const waFloat = $(".wa-float");
@@ -57,7 +90,7 @@ const REVIEWS = [];
   document.addEventListener("keydown", (e) => e.key === "Escape" && setMenu(false));
 
   /* ---------- Enlace activo ---------- */
-  const navLinks = $$('.nav a[href^="#"]');
+  const navLinks = $$('.nav a[href^="#"]');  // solo en la portada
   const spy = new IntersectionObserver((entries) => {
     entries.forEach((en) => {
       if (en.isIntersecting) navLinks.forEach((a) => a.classList.toggle("active", a.getAttribute("href") === "#" + en.target.id));
@@ -108,110 +141,6 @@ const REVIEWS = [];
         card.style.setProperty("--my", `${((y + 0.5) * 100).toFixed(1)}%`);
       });
       card.addEventListener("pointerleave", () => { card.style.transform = ""; });
-    });
-  }
-
-  /* ---------- Showcase de celebraciones ---------- */
-  const tabs = $$('.showcase-tabs [role="tab"]');
-  const stageImg = $(".stage-img");
-  const stageCap = $(".stage-cap span");
-  const panel = $("#p-show");
-  let tabTimer, autoplay = true;
-  const selectTab = (tab, focus = false) => {
-    if (tab.getAttribute("aria-selected") === "true") return;
-    tabs.forEach((t) => { t.setAttribute("aria-selected", String(t === tab)); t.tabIndex = t === tab ? 0 : -1; });
-    panel.setAttribute("aria-labelledby", tab.id);
-    if (focus) tab.focus();
-    const src = `img/fotos/${tab.dataset.img}.webp`;
-    const pre = new Image();
-    pre.src = src;
-    stageImg.classList.add("swap");
-    const swap = () => {
-      setTimeout(() => {
-        stageImg.src = src;
-        stageImg.alt = tab.dataset.cap;
-        stageImg.width = +tab.dataset.w; stageImg.height = +tab.dataset.h;
-        stageCap.textContent = tab.dataset.cap;
-        requestAnimationFrame(() => stageImg.classList.remove("swap"));
-      }, reduceMotion ? 0 : 280);
-    };
-    pre.decode ? pre.decode().then(swap, swap) : (pre.onload = swap);
-  };
-  tabs.forEach((t, i) => {
-    t.tabIndex = i === 0 ? 0 : -1;
-    t.addEventListener("click", () => { autoplay = false; selectTab(t); });
-    t.addEventListener("keydown", (e) => {
-      const d = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[e.key];
-      if (!d) return;
-      e.preventDefault(); autoplay = false;
-      selectTab(tabs[(i + d + tabs.length) % tabs.length], true);
-    });
-  });
-  // rotación automática hasta que el usuario toque una pestaña
-  if (!reduceMotion && tabs.length) {
-    const showIO = new IntersectionObserver(([en]) => {
-      clearInterval(tabTimer);
-      if (en.isIntersecting && autoplay) {
-        tabTimer = setInterval(() => {
-          if (!autoplay) return clearInterval(tabTimer);
-          const i = tabs.findIndex((t) => t.getAttribute("aria-selected") === "true");
-          selectTab(tabs[(i + 1) % tabs.length]);
-        }, 4200);
-      }
-    }, { threshold: 0.4 });
-    showIO.observe($(".showcase"));
-  }
-
-  /* ---------- Galería: filtros ---------- */
-  const items = $$(".g-item");
-  $$(".filters button").forEach((btn) => btn.addEventListener("click", () => {
-    $$(".filters button").forEach((b) => b.classList.toggle("active", b === btn));
-    const f = btn.dataset.filter;
-    items.forEach((it, i) => {
-      const show = f === "all" || it.dataset.cat === f;
-      it.classList.toggle("hide", !show);
-      it.classList.remove("pop");
-      if (show && !reduceMotion) { void it.offsetWidth; it.style.animationDelay = `${(i % 8) * 40}ms`; it.classList.add("pop"); }
-    });
-  }));
-
-  /* ---------- Galería: visor ---------- */
-  const lb = $("#lightbox");
-  if (lb && typeof lb.showModal === "function") {
-    const lbImg = $("img", lb), lbCap = $("figcaption", lb);
-    let current = 0;
-    const visible = () => items.filter((it) => !it.classList.contains("hide"));
-    const show = (idx) => {
-      const list = visible();
-      current = (idx + list.length) % list.length;
-      const it = list[current], img = $("img", it);
-      lbImg.src = it.getAttribute("href");
-      lbImg.alt = img.alt;
-      lbCap.textContent = img.alt;
-      lbImg.style.animation = "none"; void lbImg.offsetWidth; lbImg.style.animation = "";
-    };
-    items.forEach((it) => it.addEventListener("click", (e) => {
-      e.preventDefault();
-      show(visible().indexOf(it));
-      lb.showModal();
-      document.body.style.overflow = "hidden";
-    }));
-    lb.addEventListener("close", () => { document.body.style.overflow = ""; });
-    $(".lb-close", lb).addEventListener("click", () => lb.close());
-    $(".lb-prev", lb).addEventListener("click", () => show(current - 1));
-    $(".lb-next", lb).addEventListener("click", () => show(current + 1));
-    lb.addEventListener("click", (e) => { if (e.target === lb || e.target.tagName === "FIGURE") lb.close(); });
-    lb.addEventListener("keydown", (e) => {
-      if (e.key === "ArrowLeft") show(current - 1);
-      if (e.key === "ArrowRight") show(current + 1);
-    });
-    let sx = null;
-    lb.addEventListener("touchstart", (e) => { sx = e.touches[0].clientX; }, { passive: true });
-    lb.addEventListener("touchend", (e) => {
-      if (sx === null) return;
-      const dx = e.changedTouches[0].clientX - sx;
-      if (Math.abs(dx) > 50) show(current + (dx < 0 ? 1 : -1));
-      sx = null;
     });
   }
 
