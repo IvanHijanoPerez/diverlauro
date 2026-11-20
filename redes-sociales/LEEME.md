@@ -1,6 +1,19 @@
-# Kit de Instagram · Diver Lauro
+# Kit de redes sociales · Diver Lauro
 
 Todo listo para relanzar **@diverlauro**. Las imágenes están en esta carpeta; las plantillas editables en `plantillas/` (se regeneran con `python tools/redes.py`).
+
+## 0. Qué cambiar en cada sitio (resumen)
+
+Los mismos datos en todas partes ayudan a Google a confiar en el negocio:
+**Diver Lauro · Calle Crianza, 30, 29130 Alhaurín de la Torre · 647 91 30 22 · info@diverlauro.com · https://diverlauro.com**
+
+| Dónde | Qué cambiar |
+|---|---|
+| **Instagram** | Foto de perfil, nombre, bio, enlace `https://diverlauro.com`, botones (WhatsApp, llamar, correo `info@diverlauro.com`, dirección), destacados nuevos. **Archivar** (no borrar) las publicaciones antiguas con fotos desactualizadas y publicar los 7 posts nuevos. |
+| **Facebook** | Foto de perfil (`perfil/perfil-amarillo.png`), portada (`portadas/portada-facebook.png`), sitio web, correo, teléfono, dirección y categoría *Salón de eventos*. Decidid cuál de las dos páginas de Diver Lauro es la buena y eliminad o fusionad la otra. Compartid los mismos posts. |
+| **Google (ficha de Maps)** | Logo (`perfil/perfil-amarillo.png`), portada (`portadas/portada-google.png`), sitio web `https://diverlauro.com`, descripción, servicios y horario. Subid el post "¿Buscas fecha?" como **novedad**. |
+| **WhatsApp Business** | Foto de perfil, descripción ("Salón de celebraciones en Alhaurín de la Torre · De día y de noche"), web, correo y dirección. Mensaje de bienvenida y respuestas rápidas para precios y fechas libres. |
+| **Web antigua** (`diverlauro.wordpress.com`) | Poner un aviso con enlace a `https://diverlauro.com`, o cerrarla. |
 
 ## 1. Perfil
 

@@ -233,6 +233,34 @@ DESIGNS["perfil/perfil-azul"] = (W, H, page(W, H, f"""
 <img src="{LOGO_Y}" style="position:absolute;left:50%;top:50%;width:880px;transform:translate(-50%,-58%)">
 <p style="position:absolute;left:0;right:0;top:640px;text-align:center;margin:0;font-weight:800;font-size:58px;letter-spacing:.06em;color:#fff">SALÓN DE CELEBRACIONES</p>"""))
 
+# --------------------- PORTADAS (Facebook y Google) ---------------------
+# Facebook: 1640x856. Lo importante va en el centro (en móvil recorta los lados y en PC arriba/abajo).
+W, H = 1640, 856
+DESIGNS["portadas/portada-facebook"] = (W, H, page(W, H, f"""
+<div style="position:absolute;inset:0 50% 0 0;background:linear-gradient(180deg,#FFF3B8,#EBD450)"></div>
+<div style="position:absolute;inset:0 0 0 50%;background:radial-gradient(600px 400px at 70% 20%,rgba(122,60,255,.55),transparent 60%),linear-gradient(180deg,#0B1640,#050B1E)"></div>
+{confetti(30, W, H, ['#0D305D', '#F25C54', '#2B7BE4', '#fff', '#FF4FD8'], 31)}
+{balloons([(250, 150, 150, '#F25C54', -6), (380, 110, 120, '#fff', 5), (330, 330, 130, '#0D305D', 3)])}
+<div style="position:absolute;right:250px;top:120px;width:170px;height:170px;border-radius:50%;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.95),transparent 30%),repeating-linear-gradient(0deg,transparent 0 15px,rgba(0,0,0,.28) 15px 17px),repeating-linear-gradient(90deg,#E6E8F4 0 15px,#8F96B8 15px 17px,#C9CDE2 17px 32px,#6C7398 32px 34px);box-shadow:0 0 90px rgba(255,255,255,.4)"></div>
+<div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:760px;padding:56px 60px;border-radius:48px;background:#fff;box-shadow:0 40px 80px -30px rgba(0,0,0,.45);text-align:center">
+  <img src="{LOGO}" style="width:520px">
+  <p style="margin:18px 0 0;font-weight:800;font-size:40px;letter-spacing:.04em">SALÓN DE CELEBRACIONES</p>
+  <p style="margin:10px 0 0;font-weight:700;font-size:30px;color:#4C5F80">Alhaurín de la Torre · De día y de noche</p>
+  <p style="margin:26px 0 0"><span class="pill" style="background:#0D305D;color:#EBD450;font-size:32px;padding:16px 34px">{WEB} · {PHONE}</span></p>
+</div>"""))
+
+# Google (ficha de empresa): 1080x608 (16:9)
+W, H = 1080, 608
+DESIGNS["portadas/portada-google"] = (W, H, page(W, H, f"""
+{confetti(14, 360, H, ['#0D305D', '#F25C54', '#2B7BE4', '#fff'], 41).replace('class="conf"', 'class="conf" style="position:absolute;left:720px;top:0;width:360px;height:608px"')}
+{balloons([(820, 40, 140, '#F25C54', -6), (940, 110, 100, '#2B7BE4', 5), (860, 230, 110, '#fff', 3)])}
+<img src="{LOGO}" style="position:absolute;left:70px;top:80px;width:520px">
+<div style="position:absolute;left:70px;top:240px;width:700px">
+  <h1 style="font-size:64px">Salón de celebraciones<br>en Alhaurín de la Torre</h1>
+  <p style="font-size:30px;font-weight:700;margin:22px 0 0">Cumpleaños · Comuniones · Bodas · Despedidas · Empresas</p>
+  <p style="margin:26px 0 0"><span class="pill" style="background:#0D305D;color:#EBD450;font-size:28px;padding:14px 30px">☀️ De día y 🌙 de noche · {WEB}</span></p>
+</div>"""))
+
 
 def find_chrome():
     for c in CHROME_CANDIDATES:
