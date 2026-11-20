@@ -21,7 +21,7 @@ Diver Lauro · Salón de celebraciones
 📲 Reservas 647 91 30 22
 ```
 
-**Enlace:** `https://diverlauro.pages.dev/`
+**Enlace:** `https://diverlauro.com/`
 
 **Botones de contacto:** activa *WhatsApp* (647 91 30 22), *Llamar* y la *dirección* (Calle Crianza, 30, Alhaurín de la Torre).
 

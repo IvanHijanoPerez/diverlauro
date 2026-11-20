@@ -2,7 +2,7 @@
 
 Web del salón de celebraciones **Diver Lauro** (Calle Crianza 30, Alhaurín de la Torre, Málaga): cumpleaños, comuniones, bautizos, bodas, despedidas, comidas de empresa y eventos, de día y de noche.
 
-Publicada en **https://diverlauro.pages.dev/** (Cloudflare Pages: cada `git push` a `main` se publica solo).
+Publicada en **https://diverlauro.com/** (Cloudflare Pages: cada `git push` a `main` se publica solo; también responde en `diverlauro.pages.dev`).
 
 ## Qué incluye
 
@@ -61,13 +61,13 @@ const REVIEWS = [
 
 Ahora mismo la web solo usa fotos actuales del local: parque de bolas, rincón infantil, office y fachada. Cuando haya fotos nuevas, se guardan en `img/fotos/` en dos tamaños (`nombre.webp` de ~1600 px y `nombre-sm.webp` de ~800 px), sin datos GPS, y se añaden en `tools/build.py`.
 
-## Dominio propio
+## Dominio y correo
 
-No es obligatorio para salir en Google, pero sí recomendable: un `diverlauro.es` da más confianza, se recuerda mejor y conviene tenerlo **antes** de que Google indexe mucho la dirección `pages.dev` (cambiar de dirección después hace perder algo de posicionamiento durante unas semanas).
-
-1. Comprar el dominio (DonDominio, Dinahosting…, ~10 €/año) y apuntar sus *nameservers* a Cloudflare.
-2. Cloudflare → Workers & Pages → diverlauro → **Custom domains** → `diverlauro.es` y `www.diverlauro.es`.
-3. Cambiar `SITE` en `tools/build.py`, ejecutar `python tools/build.py` y subir los cambios.
+- Dominio **`diverlauro.com`** comprado en IONOS, con el DNS gestionado en **Cloudflare** (nameservers `coraline` y `guy.ns.cloudflare.com`).
+- La web está conectada en Cloudflare → Workers & Pages → diverlauro → **Custom domains** (`diverlauro.com` y `www.diverlauro.com`).
+- El correo `info@diverlauro.com` es de **IONOS**. En el DNS de Cloudflare **no hay que borrar** estos registros (todos en *DNS only*):
+  `MX mx00.ionos.es` y `mx01.ionos.es`, `TXT v=spf1 include:_spf-eu.ionos.com ~all`, `CNAME s1-ionos._domainkey → s1.dkim.ionos.com`, `CNAME s2-ionos._domainkey → s2.dkim.ionos.com`, `CNAME autodiscover → adsredir.ionos.info`, `CNAME _dmarc → dmarc.ionos.es`.
+- Si algún día cambia la dirección, edita `SITE` en `tools/build.py`, ejecuta `python tools/build.py` y sube los cambios.
 
 ## Para salir los primeros en Google
 
@@ -75,7 +75,7 @@ Para búsquedas locales ("salón de celebraciones Alhaurín de la Torre", "cumpl
 
 1. **Ficha de Google (business.google.com)**:
    - Categoría principal **Salón de eventos** / *Salón de celebraciones*; secundarias: *Parque infantil cubierto*, *Organizador de fiestas infantiles*, *Lugar para fiestas*.
-   - **Sitio web**: `https://diverlauro.pages.dev/` · **Teléfono**: 647 91 30 22 · **Horario** real (día y noche).
+   - **Sitio web**: `https://diverlauro.com/` · **Teléfono**: 647 91 30 22 · **Horario** real (día y noche).
    - **Descripción** con las palabras clave: salón de celebraciones en Alhaurín de la Torre, cumpleaños, comuniones, despedidas, comidas de empresa, parque de bolas.
    - **Fotos nuevas** cada semana (Google premia las fichas activas) y **publicaciones** (novedades, fechas libres).
    - **Servicios**: añadir cumpleaños infantiles, comuniones y bautizos, despedidas, comidas de empresa.

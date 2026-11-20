@@ -7,7 +7,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-SITE = "https://diverlauro.pages.dev"  # cámbialo cuando tengáis dominio propio (sin barra final)
+SITE = "https://diverlauro.com"  # dirección oficial (sin barra final)
 PHONE = "647 91 30 22"
 PHONE_INTL = "+34647913022"
 WA = "34647913022"

@@ -3,4 +3,4 @@ Allow: /
 Disallow: /tools/
 Disallow: /redes-sociales/
 
-Sitemap: https://diverlauro.pages.dev/sitemap.xml
+Sitemap: https://diverlauro.com/sitemap.xml
