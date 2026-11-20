@@ -50,15 +50,18 @@ Para regenerar los diseños de Instagram (necesita Chrome o Edge instalado):
 python tools/redes.py
 ```
 
-### Añadir reseñas reales de Google
+### Reseñas de Google (automáticas)
 
-En `tools/build.py`, al principio, rellena `REVIEWS` copiando reseñas **tal cual** de la ficha de Google Maps y ejecuta `python tools/build.py`:
+La función `functions/api/resenas.js` (Cloudflare Pages Functions) pide a Google la nota, el número de reseñas y hasta 5 reseñas (Places API New) y las guarda 24 h en caché. La portada las muestra solas en «Opiniones» (solo las de 4–5 estrellas con texto). Si no hay clave o Google falla, la web sigue mostrando la nota fija (4,5 · 175).
 
-```python
-REVIEWS = [
-    ("María G.", 5, "Texto exacto de la reseña…", "hace 2 meses"),
-]
-```
+Configuración (una sola vez):
+1. Google Cloud → proyecto → activar **Places API (New)** → crear **clave de API** restringida a esa API.
+2. Cloudflare → Workers & Pages → diverlauro → **Settings → Variables and Secrets** → añadir el secreto `GOOGLE_PLACES_KEY` (Production) y volver a desplegar.
+3. Opcional: `GOOGLE_PLACE_ID` con el ID del negocio (si no, se busca por nombre).
+
+Para comprobarlo: abrir `https://diverlauro.com/api/resenas`.
+
+Además, en `tools/build.py` hay una lista `REVIEWS` para poner reseñas fijas a mano (formato: `("Nombre", 5, "Texto tal cual", "hace 2 meses")`).
 
 ### Fotos nuevas
 

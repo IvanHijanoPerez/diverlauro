@@ -2,5 +2,6 @@ User-agent: *
 Allow: /
 Disallow: /tools/
 Disallow: /redes-sociales/
+Disallow: /api/
 
 Sitemap: https://diverlauro.com/sitemap.xml

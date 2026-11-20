@@ -447,7 +447,7 @@ def build_home():
         </div>
         <a class="rating reveal" style="--d:.54s" href="#opiniones">
           <span class="rating-stars" aria-hidden="true">{stars()}</span>
-          <span><strong data-count="4.5" data-decimals="1">4,5</strong> en Google · <strong data-count="175">175</strong>+ reseñas</span>
+          <span><strong data-count="4.5" data-decimals="1" data-g="rating">4,5</strong> en Google · <strong data-count="175" data-g="total">175</strong>+ reseñas</span>
         </a>
       </div>
       <p class="hero-hint" aria-hidden="true">🎈 Toca los globos</p>
@@ -564,10 +564,10 @@ def build_home():
           <p class="kicker">Opiniones</p>
           <h2 id="op-title">Lo que dicen <span class="script-hl">en Google</span></h2>
           <div class="score">
-            <span class="score-num" data-count="4.5" data-decimals="1">4,5</span>
+            <span class="score-num" data-count="4.5" data-decimals="1" data-g="rating">4,5</span>
             <div>
               <span class="rating-stars big" aria-label="4,5 de 5 estrellas">{stars()}</span>
-              <p>Más de <strong>175 reseñas</strong> en Google</p>
+              <p>Más de <strong><span data-g="total">175</span> reseñas</strong> en Google</p>
             </div>
           </div>
           <div class="review-actions">
@@ -584,6 +584,13 @@ def build_home():
             <li class="reveal tilt" style="--d:.26s"><span class="praise-ic" style="--c:#E0B526">{ic("snow")}</span><strong>Climatizado</strong><span>Cómodo tanto en verano como en invierno.</span></li>
           </ul>
 {reviews_html()}
+        </div>
+      </div>
+      <div class="container">
+        <div class="g-reviews" id="google-reviews" data-src="/api/resenas" hidden>
+          <p class="g-reviews-title">{ic("google")} Reseñas recientes de Google</p>
+          <div class="g-reviews-list"></div>
+          <a class="btn btn-outline g-reviews-more" href="{MAPS_REVIEWS}" target="_blank" rel="noopener">Ver todas las reseñas en Google {ic("arrow")}</a>
         </div>
       </div>
     </section>
@@ -972,7 +979,7 @@ def build_sitemap():
         [(f"/ideas/{a['slug']}/", "0.6") for a in ARTICLES]
     body = "\n".join(f"  <url>\n    <loc>{SITE}{u}</loc>\n    <lastmod>{today}</lastmod>\n    <priority>{pr}</priority>\n  </url>" for u, pr in urls)
     (ROOT / "sitemap.xml").write_text(f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{body}\n</urlset>\n', encoding="utf-8")
-    (ROOT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nDisallow: /tools/\nDisallow: /redes-sociales/\n\nSitemap: {SITE}/sitemap.xml\n", encoding="utf-8")
+    (ROOT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nDisallow: /tools/\nDisallow: /redes-sociales/\nDisallow: /api/\n\nSitemap: {SITE}/sitemap.xml\n", encoding="utf-8")
 
 
 if __name__ == "__main__":

@@ -114,7 +114,8 @@
       const start = performance.now() + 300, dur = 1500;
       const tick = (t) => {
         const p = Math.min(Math.max((t - start) / dur, 0), 1);
-        el.textContent = fmt(target * (1 - Math.pow(1 - p, 4)));
+        // se lee en cada fotograma: las reseñas de Google pueden actualizar la cifra mientras se anima
+        el.textContent = fmt(parseFloat(el.dataset.count) * (1 - Math.pow(1 - p, 4)));
         if (p < 1) requestAnimationFrame(tick);
       };
       el.textContent = fmt(0);
@@ -136,6 +137,43 @@
       });
       card.addEventListener("pointerleave", () => { card.style.transform = ""; });
     });
+  }
+
+  /* ---------- Reseñas de Google (vía /api/resenas, se actualizan solas) ---------- */
+  const gBox = $("#google-reviews");
+  if (gBox && "IntersectionObserver" in window) {
+    const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+    const star = '<svg class="ic"><use href="#i-star"/></svg>';
+    const render = (d) => {
+      if (!d || d.error) return;
+      if (typeof d.rating === "number") {
+        $$('[data-g="rating"]').forEach((el) => { el.dataset.count = d.rating.toFixed(1); el.textContent = d.rating.toFixed(1).replace(".", ","); });
+      }
+      if (typeof d.total === "number") {
+        $$('[data-g="total"]').forEach((el) => { el.dataset.count = String(d.total); el.textContent = String(d.total); });
+      }
+      const list = (d.reviews || []).slice(0, 6);
+      if (!list.length) return;
+      $(".g-reviews-list", gBox).innerHTML = list.map((r) => {
+        const avatar = r.photo
+          ? `<img class="rv-photo" src="${esc(r.photo)}" alt="" width="36" height="36" loading="lazy" referrerpolicy="no-referrer">`
+          : `<span class="rv-avatar" aria-hidden="true">${esc((r.author || "?").charAt(0).toUpperCase())}</span>`;
+        const name = r.authorUri ? `<a href="${esc(r.authorUri)}" target="_blank" rel="noopener nofollow">${esc(r.author)}</a>` : esc(r.author);
+        return `<figure class="review-card g-card">
+          <figcaption>${avatar}<span><strong>${name}</strong><small>${esc(r.when)}</small></span></figcaption>
+          <span class="rating-stars" aria-label="${r.rating} de 5 estrellas">${star.repeat(Math.round(r.rating))}</span>
+          <blockquote>${esc(r.text)}</blockquote>
+        </figure>`;
+      }).join("");
+      if (d.mapsUri) $(".g-reviews-more", gBox).href = d.mapsUri;
+      gBox.hidden = false;
+    };
+    const gIO = new IntersectionObserver(([en]) => {
+      if (!en.isIntersecting) return;
+      gIO.disconnect();
+      fetch(gBox.dataset.src).then((r) => (r.ok ? r.json() : null)).then(render).catch(() => {});
+    }, { rootMargin: "600px 0px" });
+    gIO.observe($("#opiniones") || gBox);
   }
 
   /* ---------- Formulario → WhatsApp ---------- */

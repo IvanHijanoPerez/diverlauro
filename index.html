@@ -279,7 +279,7 @@
         </div>
         <a class="rating reveal" style="--d:.54s" href="#opiniones">
           <span class="rating-stars" aria-hidden="true"><svg class="ic"><use href="#i-star"/></svg><svg class="ic"><use href="#i-star"/></svg><svg class="ic"><use href="#i-star"/></svg><svg class="ic"><use href="#i-star"/></svg><svg class="ic half"><use href="#i-star"/></svg></span>
-          <span><strong data-count="4.5" data-decimals="1">4,5</strong> en Google · <strong data-count="175">175</strong>+ reseñas</span>
+          <span><strong data-count="4.5" data-decimals="1" data-g="rating">4,5</strong> en Google · <strong data-count="175" data-g="total">175</strong>+ reseñas</span>
         </a>
       </div>
       <p class="hero-hint" aria-hidden="true">🎈 Toca los globos</p>
@@ -431,10 +431,10 @@
           <p class="kicker">Opiniones</p>
           <h2 id="op-title">Lo que dicen <span class="script-hl">en Google</span></h2>
           <div class="score">
-            <span class="score-num" data-count="4.5" data-decimals="1">4,5</span>
+            <span class="score-num" data-count="4.5" data-decimals="1" data-g="rating">4,5</span>
             <div>
               <span class="rating-stars big" aria-label="4,5 de 5 estrellas"><svg class="ic"><use href="#i-star"/></svg><svg class="ic"><use href="#i-star"/></svg><svg class="ic"><use href="#i-star"/></svg><svg class="ic"><use href="#i-star"/></svg><svg class="ic half"><use href="#i-star"/></svg></span>
-              <p>Más de <strong>175 reseñas</strong> en Google</p>
+              <p>Más de <strong><span data-g="total">175</span> reseñas</strong> en Google</p>
             </div>
           </div>
           <div class="review-actions">
@@ -451,6 +451,13 @@
             <li class="reveal tilt" style="--d:.26s"><span class="praise-ic" style="--c:#E0B526"><svg class="ic"><use href="#i-snow"/></svg></span><strong>Climatizado</strong><span>Cómodo tanto en verano como en invierno.</span></li>
           </ul>
 
+        </div>
+      </div>
+      <div class="container">
+        <div class="g-reviews" id="google-reviews" data-src="/api/resenas" hidden>
+          <p class="g-reviews-title"><svg class="ic"><use href="#i-google"/></svg> Reseñas recientes de Google</p>
+          <div class="g-reviews-list"></div>
+          <a class="btn btn-outline g-reviews-more" href="https://www.google.com/maps/search/?api=1&amp;query=Diver+Lauro+Alhaur%C3%ADn+de+la+Torre" target="_blank" rel="noopener">Ver todas las reseñas en Google <svg class="ic"><use href="#i-arrow"/></svg></a>
         </div>
       </div>
     </section>
