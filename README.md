@@ -52,12 +52,14 @@ python tools/redes.py
 
 ### Reseñas de Google (automáticas)
 
-La función `functions/api/resenas.js` (Cloudflare Pages Functions) pide a Google la nota, el número de reseñas y hasta 5 reseñas (Places API New) y las guarda 24 h en caché. La portada las muestra solas en «Opiniones» (solo las de 4–5 estrellas con texto). Si no hay clave o Google falla, la web sigue mostrando la nota fija (4,5 · 175).
+La función `functions/api/resenas.js` (Cloudflare Pages Functions) pide a Google la nota, el número de reseñas y hasta 5 reseñas (Places API New). Guarda una copia global en Cloudflare KV que se renueva cada 24 h y tiene un **límite duro de 20 consultas a Google al día** (unas 600/mes como máximo, dentro del uso gratuito). La portada las muestra solas en «Opiniones» (solo las de 4–5 estrellas con texto). Si no hay clave o Google falla, la web sigue mostrando la nota fija (4,5 · 175).
 
 Configuración (una sola vez):
 1. Google Cloud → proyecto → activar **Places API (New)** → crear **clave de API** restringida a esa API.
-2. Cloudflare → Workers & Pages → diverlauro → **Settings → Variables and Secrets** → añadir el secreto `GOOGLE_PLACES_KEY` (Production) y volver a desplegar.
-3. Opcional: `GOOGLE_PLACE_ID` con el ID del negocio (si no, se busca por nombre).
+2. Cloudflare → **Storage & Databases → KV** → crear el namespace `diverlauro-resenas`.
+3. Cloudflare → Workers & Pages → diverlauro → **Settings → Bindings** → añadir *KV namespace* con nombre de variable `RESENAS_KV` y el namespace anterior.
+4. En **Settings → Variables and Secrets** → añadir el secreto `GOOGLE_PLACES_KEY` (Production) y volver a desplegar.
+5. Opcional: `GOOGLE_PLACE_ID` con el ID del negocio (si no, se busca por nombre).
 
 Para comprobarlo: abrir `https://diverlauro.com/api/resenas`.
 

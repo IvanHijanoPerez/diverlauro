@@ -1,33 +1,50 @@
 /**
  * GET /api/resenas  →  valoración y reseñas de Diver Lauro en Google (Places API New).
  *
- * Variables en Cloudflare Pages (Settings → Variables and Secrets):
- *   GOOGLE_PLACES_KEY  (secreto, obligatorio)  clave de API de Google Cloud con "Places API (New)"
- *   GOOGLE_PLACE_ID    (opcional)              si no se pone, se busca el negocio por nombre
+ * Configuración en Cloudflare Pages (proyecto diverlauro → Settings):
+ *   - Variables and Secrets:
+ *       GOOGLE_PLACES_KEY  (secreto, obligatorio)  clave de Google Cloud con "Places API (New)"
+ *       GOOGLE_PLACE_ID    (opcional)              si no se pone, se busca el negocio por nombre
+ *   - Bindings → KV namespace:
+ *       RESENAS_KV         (obligatorio)           almacén donde se guarda la copia de las reseñas
  *
- * La respuesta se guarda 24 h en la caché de Cloudflare: Google recibe muy pocas
- * peticiones al día y no se sale del uso gratuito.
+ * Protección de costes:
+ *   - Una única copia global en KV que se renueva como mucho cada 24 h (Google recibe ~1 consulta al día).
+ *   - Límite duro: como mucho MAX_GOOGLE_DIA consultas a Google por día, pase lo que pase.
+ *   - Si no hay clave o no hay KV, NUNCA se llama a Google.
  */
-const CACHE_SECONDS = 60 * 60 * 24;
+const REFRESCO_MS = 24 * 60 * 60 * 1000;
+const MAX_GOOGLE_DIA = 20;
 const BUSCAR = "Diver Lauro, Calle Crianza 30, Alhaurín de la Torre";
 const MIN_ESTRELLAS = 4;
 
-export async function onRequestGet(context) {
-  const { env, request } = context;
-  const cache = caches.default;
-  // misma clave de caché aunque la URL lleve parámetros
-  const cacheKey = new Request(new URL("/api/resenas", request.url).toString(), { method: "GET" });
-
-  const cached = await cache.match(cacheKey);
-  if (cached) return cached;
-
+export async function onRequestGet({ env }) {
   if (!env.GOOGLE_PLACES_KEY) return json({ error: "sin-clave" }, 503, 300);
+  if (!env.RESENAS_KV) return json({ error: "sin-kv" }, 503, 300);
+
+  const kv = env.RESENAS_KV;
+  const guardado = await kv.get("resenas", "json"); // { ts, data }
+  const ahora = Date.now();
+
+  if (guardado && ahora - guardado.ts < REFRESCO_MS) {
+    return json(guardado.data, 200, 3600);
+  }
+
+  // contador diario de llamadas a Google
+  const hoy = new Date().toISOString().slice(0, 10);
+  const claveContador = "llamadas:" + hoy;
+  const llamadas = parseInt((await kv.get(claveContador)) || "0", 10);
+  if (llamadas >= MAX_GOOGLE_DIA) {
+    return guardado ? json(guardado.data, 200, 3600) : json({ error: "limite" }, 503, 3600);
+  }
 
   try {
     const headers = { "X-Goog-Api-Key": env.GOOGLE_PLACES_KEY };
 
-    let placeId = env.GOOGLE_PLACE_ID;
+    let placeId = env.GOOGLE_PLACE_ID || (guardado && guardado.placeId);
+    let usadas = 0;
     if (!placeId) {
+      usadas++;
       const s = await fetch("https://places.googleapis.com/v1/places:searchText", {
         method: "POST",
         headers: { ...headers, "Content-Type": "application/json", "X-Goog-FieldMask": "places.id" },
@@ -39,6 +56,8 @@ export async function onRequestGet(context) {
       if (!placeId) throw new Error("negocio no encontrado");
     }
 
+    usadas++;
+    await kv.put(claveContador, String(llamadas + usadas), { expirationTtl: 60 * 60 * 48 });
     const r = await fetch(`https://places.googleapis.com/v1/places/${encodeURIComponent(placeId)}?languageCode=es&regionCode=ES`, {
       headers: { ...headers, "X-Goog-FieldMask": "rating,userRatingCount,googleMapsUri,reviews" },
     });
@@ -61,11 +80,12 @@ export async function onRequestGet(context) {
         .filter((x) => x.text && x.rating >= MIN_ESTRELLAS),
     };
 
-    const res = json(data, 200, CACHE_SECONDS);
-    context.waitUntil(cache.put(cacheKey, res.clone()));
-    return res;
+    await kv.put("resenas", JSON.stringify({ ts: ahora, placeId, data }));
+    return json(data, 200, 3600);
   } catch (e) {
-    return json({ error: "no-disponible", detalle: String(e && e.message || e) }, 502, 600);
+    // si Google falla, se sirve la última copia buena (aunque sea antigua)
+    if (guardado) return json(guardado.data, 200, 600);
+    return json({ error: "no-disponible", detalle: String((e && e.message) || e) }, 502, 600);
   }
 }
 
