@@ -233,6 +233,14 @@ DESIGNS["perfil/perfil-azul"] = (W, H, page(W, H, f"""
 <img src="{LOGO_Y}" style="position:absolute;left:50%;top:50%;width:880px;transform:translate(-50%,-58%)">
 <p style="position:absolute;left:0;right:0;top:640px;text-align:center;margin:0;font-weight:800;font-size:58px;letter-spacing:.06em;color:#fff">SALÓN DE CELEBRACIONES</p>"""))
 
+# Icono de la web (favicon / icono de app): monograma "DL" con el estilo de la marca
+W, H = 512, 512
+DESIGNS["perfil/icono-web"] = (W, H, page(W, H, """
+<div style="position:absolute;inset:0;background:#EBD450"></div>
+<div style="position:absolute;inset:0;display:grid;place-items:center">
+  <span class="script" style="font-size:330px;line-height:1;color:#0D305D;transform:translate(-6px,-14px) rotate(-6deg)">DL</span>
+</div>"""))
+
 # --------------------- PORTADAS (Facebook y Google) ---------------------
 # Facebook: 1640x856. Lo importante va en el centro (en móvil recorta los lados y en PC arriba/abajo).
 W, H = 1640, 856
@@ -297,6 +305,11 @@ def main():
         im.thumbnail((96, 96))
         im.save(web / "perfil-sm.webp", "WEBP", quality=85)
         print("OK  img/redes/ (miniaturas para la web)")
+        # iconos de la web a partir del monograma
+        ico = Image.open(OUT / "perfil/icono-web.png").convert("RGB")
+        for size, name in ((512, "icon-512.png"), (192, "icon-192.png"), (180, "apple-touch-icon.png"), (48, "favicon-48.png"), (32, "favicon-32.png")):
+            ico.resize((size, size), Image.LANCZOS).save(ROOT / "img" / name, optimize=True)
+        print("OK  img/ (favicon e iconos de la web)")
     except ImportError:
         print("Pillow no instalado: no se generan las miniaturas de la web")
 

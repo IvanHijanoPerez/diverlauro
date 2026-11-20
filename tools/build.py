@@ -96,14 +96,14 @@ PAGES = [
     },
     {
         "slug": "despedidas-fiestas-noche-alhaurin-de-la-torre",
-        "card": "Despedidas y fiestas de noche", "icon": "glass", "color": "#9B5DE5",
-        "card_text": "Despedidas de soltera y soltero, cumpleaños de adultos y fiestas privadas.",
-        "title": "Local para despedidas y fiestas de noche en Alhaurín de la Torre | Diver Lauro",
-        "desc": "¿Despedida de soltera o soltero, cumpleaños de adultos o fiesta privada? Diver Lauro abre también de noche en Alhaurín de la Torre: música, espacio para bailar y salón climatizado. Reserva por WhatsApp.",
-        "h1": "Despedidas y fiestas de noche en Alhaurín de la Torre",
+        "card": "Fiestas de noche y despedidas", "icon": "glass", "color": "#9B5DE5",
+        "card_text": "Fiestas privadas para mayores, despedidas de soltera y soltero y cumpleaños de adultos.",
+        "title": "Local para fiestas de noche y despedidas en Alhaurín de la Torre | Diver Lauro",
+        "desc": "Local para fiestas privadas de noche en Alhaurín de la Torre: cumpleaños de adultos, despedidas de soltera y soltero, aniversarios y fiestas con amigos. Música, espacio para bailar y salón climatizado. Reserva por WhatsApp.",
+        "h1": "Fiestas de noche en Alhaurín de la Torre",
         "kicker": "De noche",
-        "lead": "¿Despedida de soltera o soltero, unos 40 o una fiesta con amigos? Diver Lauro también abre de noche: un salón para tu grupo con música y espacio para bailar.",
-        "panel": ("glass", "#7A3CFF", "Despedidas · Cumpleaños · Fiestas privadas"),
+        "lead": "De noche, Diver Lauro es el sitio para tu fiesta: cumpleaños de adultos, despedidas de soltera o soltero, aniversarios o simplemente una noche con amigos. Un salón para tu grupo, con música y espacio para bailar.",
+        "panel": ("glass", "#7A3CFF", "Fiestas privadas · Despedidas · Cumpleaños"),
         "night": True,
         "wa": "Hola, me gustaría información para una fiesta de noche o despedida en Diver Lauro",
         "features": [
@@ -378,8 +378,8 @@ def stars():
 
 def build_home():
     ld = [BUSINESS_LD, faq_ld(HOME_FAQ)]
-    html = head("Diver Lauro · Salón de celebraciones en Alhaurín de la Torre (Málaga)",
-                f"Diver Lauro, salón de celebraciones en Alhaurín de la Torre (Málaga). Cumpleaños, comuniones, bautizos, bodas, despedidas y comidas de empresa, de día y de noche. Parque de bolas, sonido y salón climatizado. Reserva: {PHONE}.",
+    html = head("Diver Lauro · Salón de celebraciones y fiestas en Alhaurín de la Torre (Málaga)",
+                f"Diver Lauro, salón de celebraciones en Alhaurín de la Torre (Málaga). Cumpleaños, comuniones, bautizos, bodas y comidas de empresa de día, y fiestas privadas y despedidas de noche. Parque de bolas, sonido y salón climatizado. Reserva: {PHONE}.",
                 "/", ld)
     html += header(True)
     html += f"""
@@ -396,8 +396,8 @@ def build_home():
           </span>
         </h1>
         <p class="hero-lead reveal" style="--d:.3s">
-          Cumpleaños, comuniones, bodas, despedidas, comidas de empresa… Un salón amplio con parque de bolas para los peques
-          y espacio de sobra para que los mayores lo den todo. <strong>Tú pones la fiesta, nosotros el sitio.</strong>
+          De día, cumpleaños, comuniones y comidas familiares con parque de bolas para los peques.
+          De noche, <a class="lead-link" href="/despedidas-fiestas-noche-alhaurin-de-la-torre/">fiestas para mayores</a>: despedidas, cumpleaños y celebraciones con música hasta tarde. <strong>Tú pones la fiesta, nosotros el sitio.</strong>
         </p>
         <div class="mode-switch reveal" style="--d:.38s" role="group" aria-label="Elige el tipo de fiesta">
           <button type="button" data-set-mode="day">{ic("sun")} Fiesta de día</button>
@@ -418,7 +418,7 @@ def build_home():
 
     <div class="marquee" aria-hidden="true">
       <div class="marquee-track">
-        {("<span>Cumpleaños</span><b>✦</b><span>Comuniones</span><b>✦</b><span>Bautizos</span><b>✦</b><span>Bodas</span><b>✦</b><span>Despedidas de solter@s</span><b>✦</b><span>Comidas de empresa</span><b>✦</b><span>Aniversarios</span><b>✦</b><span>Peñas y eventos</span><b>✦</b><span>Fiestas infantiles</span><b>✦</b>" * 2)}
+        {("<span>Cumpleaños</span><b>✦</b><span>Comuniones</span><b>✦</b><span>Bautizos</span><b>✦</b><span>Bodas</span><b>✦</b><span>Fiestas de noche</span><b>✦</b><span>Despedidas de solter@s</span><b>✦</b><span>Comidas de empresa</span><b>✦</b><span>Aniversarios</span><b>✦</b><span>Peñas y eventos</span><b>✦</b><span>Fiestas infantiles</span><b>✦</b>" * 2)}
       </div>
     </div>
 
