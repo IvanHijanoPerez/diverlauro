@@ -11,6 +11,7 @@ SITE = "https://diverlauro.com"  # dirección oficial (sin barra final)
 PHONE = "647 91 30 22"
 PHONE_INTL = "+34647913022"
 WA = "34647913022"
+EMAIL = "info@diverlauro.com"
 INSTAGRAM = "https://www.instagram.com/diverlauro/"
 FACEBOOK = "https://www.facebook.com/Diver-Lauro-193712877866926"
 MAPS_DIR = "https://www.google.com/maps/dir/?api=1&amp;destination=36.6574069%2C-4.5781131"
@@ -25,7 +26,8 @@ def wa(text: str) -> str:
 
 WA_DEFAULT = wa("Hola, me gustaría información para celebrar en Diver Lauro")
 
-EXTRA_ICONS = """      <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
+EXTRA_ICONS = """      <symbol id="i-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
+      <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
       <symbol id="i-sofa" viewBox="0 0 24 24"><path d="M20 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v3"/><path d="M2 16a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-5a2 2 0 0 0-4 0v1.5a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5V11a2 2 0 0 0-4 0z"/><path d="M4 18v2M20 18v2"/></symbol>
       <symbol id="i-palette" viewBox="0 0 24 24"><circle cx="13.5" cy="6.5" r="1.5"/><circle cx="17.5" cy="10.5" r="1.5"/><circle cx="8.5" cy="7.5" r="1.5"/><circle cx="6.5" cy="12.5" r="1.5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.93 0 1.65-.75 1.65-1.69 0-.44-.18-.84-.44-1.13-.29-.29-.44-.65-.44-1.13a1.64 1.64 0 0 1 1.67-1.67h2c3.05 0 5.56-2.5 5.56-5.56C21.97 6.01 17.46 2 12 2z"/></symbol>
 """
@@ -274,7 +276,7 @@ def footer():
       </div>
     </div>
     <div class="container footer-bottom">
-      <p>© <span id="year">2026</span> Diver Lauro · Calle Crianza, 30 · 29130 Alhaurín de la Torre (Málaga) · {PHONE}</p>
+      <p>© <span id="year">2026</span> Diver Lauro · Calle Crianza, 30 · 29130 Alhaurín de la Torre (Málaga) · {PHONE} · <a href="mailto:{EMAIL}">{EMAIL}</a></p>
     </div>
   </footer>
 
@@ -312,6 +314,7 @@ BUSINESS_LD = {
     "logo": f"{SITE}/img/logo.png",
     "image": [f"{SITE}/img/og-image.jpg", f"{SITE}/img/fotos/parque-bolas.webp", f"{SITE}/img/fotos/fachada.webp"],
     "telephone": PHONE_INTL,
+    "email": EMAIL,
     "priceRange": "€€",
     "address": {"@type": "PostalAddress", "streetAddress": "Calle Crianza, 30", "addressLocality": "Alhaurín de la Torre",
                 "addressRegion": "Málaga", "postalCode": "29130", "addressCountry": "ES"},
@@ -655,6 +658,10 @@ def build_home():
               <span class="contact-ic" style="--c:#2B7BE4">{ic("phone")}</span>
               <span><small>Teléfono y WhatsApp</small>{PHONE}</span>
             </a>
+            <a class="contact-item" href="mailto:{EMAIL}">
+              <span class="contact-ic" style="--c:#16B39A">{ic("mail")}</span>
+              <span><small>Correo</small>{EMAIL}</span>
+            </a>
             <a class="contact-item" href="{INSTAGRAM}" target="_blank" rel="noopener">
               <span class="contact-ic" style="--c:#D9479B">{ic("instagram")}</span>
               <span><small>Instagram</small>@diverlauro</span>
@@ -686,7 +693,7 @@ def build_page(p):
             {"@type": "ListItem", "position": 2, "name": p["card"], "item": SITE + path}]},
         {"@context": "https://schema.org", "@type": "Service", "name": p["h1"], "serviceType": p["card"],
          "description": p["desc"], "areaServed": "Alhaurín de la Torre, Málaga",
-         "provider": {"@id": f"{SITE}/#negocio", "@type": "LocalBusiness", "name": "Diver Lauro", "telephone": PHONE_INTL,
+         "provider": {"@id": f"{SITE}/#negocio", "@type": "LocalBusiness", "name": "Diver Lauro", "telephone": PHONE_INTL, "email": EMAIL,
                       "address": BUSINESS_LD["address"]}, "url": SITE + path},
         faq_ld(p["faq"]),
     ]

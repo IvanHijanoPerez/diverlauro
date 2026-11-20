@@ -23,7 +23,7 @@ Diver Lauro · Salón de celebraciones
 
 **Enlace:** `https://diverlauro.com/`
 
-**Botones de contacto:** activa *WhatsApp* (647 91 30 22), *Llamar* y la *dirección* (Calle Crianza, 30, Alhaurín de la Torre).
+**Botones de contacto:** activa *WhatsApp* (647 91 30 22), *Llamar*, *Correo* (info@diverlauro.com) y la *dirección* (Calle Crianza, 30, Alhaurín de la Torre).
 
 ## 2. Historias destacadas
 
