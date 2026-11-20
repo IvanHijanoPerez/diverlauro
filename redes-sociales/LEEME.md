@@ -60,7 +60,7 @@ Instagram muestra lo último arriba, así que publicadlas en este orden para que
 1. **`posts/post-7-parque-bolas.png`**
    > La zona favorita de los peques 🎈 Parque de bolas con tobogán en pleno Alhaurín de la Torre. ¿Celebramos su cumple? Reservas por WhatsApp 647 91 30 22 · Enlace en la bio.
 2. **`posts/post-4-incluye.png`**
-   > Todo lo que necesitas para tu fiesta, ya está aquí ✅ Parque de bolas, futbolín, pimpón, sonido y TV, office con frigorífico y microondas, mesas y aire acondicionado. Tú solo trae la tarta 🎂
+   > Todo lo que necesitas para tu fiesta, ya está aquí ✅ Parque de bolas, rincón infantil, sonido y TV, office con frigorífico y microondas, mesas y aire acondicionado. Tú solo trae la tarta 🎂
 3. **`posts/post-3-que-celebramos.png`**
    > Un salón, mil celebraciones 🎉 Cumpleaños, comuniones, bautizos, bodas, despedidas, comidas de empresa, cenas de Navidad… ¿Qué celebras tú? Cuéntanoslo por WhatsApp.
 4. **`posts/post-6-opiniones.png`**

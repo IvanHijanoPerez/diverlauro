@@ -122,7 +122,7 @@ DESIGNS["posts/post-3-que-celebramos"] = (W, H, page(W, H, f"""
 <img src="{LOGO_Y}" style="position:absolute;left:80px;bottom:150px;width:330px">
 {FOOT_LIGHT}"""))
 
-items = ["Parque de bolas y tobogán", "Futbolín y pimpón", "Rincón infantil", "Sonido y TV", "Office con frigorífico y microondas", "Mesas y sillas", "Aire acondicionado"]
+items = ["Parque de bolas y tobogán", "Rincón infantil", "Sonido y TV", "Office con frigorífico y microondas", "Mesas y sillas", "Decóralo a tu gusto", "Aire acondicionado"]
 lis = "".join(f'<li style="display:flex;align-items:center;gap:26px;margin-bottom:20px"><span style="display:grid;place-items:center;width:56px;height:56px;border-radius:50%;background:#0D305D;flex-shrink:0">{icon("check", 38, "#EBD450", 3)}</span>{t}</li>' for t in items)
 DESIGNS["posts/post-4-incluye"] = (W, H, page(W, H, f"""
 {balloons([(880, 40, 130, '#F25C54', 6), (960, 150, 90, '#2B7BE4', -4)])}

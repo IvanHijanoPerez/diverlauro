@@ -4,7 +4,11 @@ Uso:  python tools/build.py
 Edita los textos aquí y vuelve a ejecutarlo. No necesita librerías externas.
 """
 import json
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from ideas import ARTICLES, FECHA as IDEAS_FECHA  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 SITE = "https://diverlauro.com"  # dirección oficial (sin barra final)
@@ -25,6 +29,14 @@ def wa(text: str) -> str:
 
 
 WA_DEFAULT = wa("Hola, me gustaría información para celebrar en Diver Lauro")
+
+# ---------------------------------------------------------------------------
+# Opiniones reales de Google Maps (cópialas TAL CUAL de la ficha de Google).
+# Formato: ("Nombre o inicial", estrellas, "Texto de la reseña", "hace X meses" o "")
+# Si la lista está vacía, la web solo muestra la valoración media.
+# ---------------------------------------------------------------------------
+REVIEWS = [
+]
 
 EXTRA_ICONS = """      <symbol id="i-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
       <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
@@ -47,7 +59,7 @@ PAGES = [
         "card": "Cumpleaños infantiles", "icon": "cake", "color": "#F25C54",
         "card_text": "Parque de bolas, tobogán y juegos para que los peques no paren.",
         "title": "Cumpleaños infantiles en Alhaurín de la Torre con parque de bolas | Diver Lauro",
-        "desc": "Celebra el cumpleaños de tus hijos en Diver Lauro (Alhaurín de la Torre): parque de bolas con tobogán, rincón infantil, futbolín y salón climatizado para las familias. Reserva por WhatsApp.",
+        "desc": "Celebra el cumpleaños de tus hijos en Diver Lauro (Alhaurín de la Torre): parque de bolas con tobogán, rincón infantil y salón climatizado para las familias. Reserva por WhatsApp.",
         "h1": "Cumpleaños infantiles en Alhaurín de la Torre",
         "kicker": "Fiestas infantiles",
         "lead": "Un salón para que los peques jueguen sin parar y los mayores estén cómodos: parque de bolas con tobogán, juegos y sitio de sobra para la merienda y la tarta.",
@@ -62,8 +74,8 @@ PAGES = [
             ("snow", "Climatizado", "Cómodo en verano y en invierno."),
         ],
         "faq": [
-            ("¿Qué tiene el salón para un cumpleaños infantil?", "Parque de bolas con tobogán, rincón infantil, futbolín y pimpón para los niños, y mesas y sillas, equipo de sonido, TV y zona de office con frigorífico y microondas para los mayores. Todo climatizado."),
-            ("¿Cómo reservo el cumpleaños?", f"Escríbenos por WhatsApp o llámanos al {PHONE} con la fecha, el horario y el número aproximado de niños y adultos. Te confirmamos disponibilidad y precio."),
+            ("¿Qué tiene el salón para un cumpleaños infantil?", "Parque de bolas con tobogán y rincón infantil para los niños, y mesas y sillas, equipo de sonido, TV y zona de office con frigorífico y microondas para los mayores. Todo climatizado."),
+            ("¿Cómo reservo el cumpleaños?", f"Escríbenos por WhatsApp ({PHONE}), por correo a {EMAIL} o por mensaje en Instagram o Facebook, con la fecha, el horario y el número aproximado de niños y adultos. Te confirmamos disponibilidad y precio."),
             ("¿Puedo decorar el salón?", "Claro: globos, manteles, mesa dulce, piñata… Cuéntanos tu idea y te ayudamos a organizarla."),
             ("¿Dónde está Diver Lauro?", "En la Calle Crianza, 30, 29130 Alhaurín de la Torre (Málaga), a pocos minutos de Málaga capital, Churriana y Alhaurín el Grande."),
         ],
@@ -81,7 +93,7 @@ PAGES = [
         "wa": "Hola, me gustaría información para celebrar una comunión o bautizo en Diver Lauro",
         "features": [
             ("users", "Mesas para todos", "Montamos las mesas como mejor os venga: imperiales o por grupos."),
-            ("game", "Los niños, entretenidos", "Parque de bolas, futbolín y pimpón para que los peques disfruten."),
+            ("game", "Los niños, entretenidos", "Parque de bolas con tobogán y rincón infantil para que los peques disfruten."),
             ("palette", "Decóralo a tu gusto", "Manteles, centros, globos, mesa dulce… a tu estilo."),
             ("utensils", "Office equipado", "Frigorífico y microondas para la comida y las bebidas."),
             ("music", "Sonido y TV", "Para la música y el vídeo de fotos del protagonista."),
@@ -91,7 +103,7 @@ PAGES = [
             ("¿Cabemos todos?", "La sala es amplia y diáfana. Dinos cuántos invitados sois y te confirmamos cómo montar las mesas."),
             ("¿Se pueden celebrar bodas y aniversarios?", "Sí. Además de comuniones y bautizos celebramos bodas íntimas, aniversarios y reuniones familiares."),
             ("¿Puedo decorar el salón?", "Claro. Cada familia lo decora a su manera: colores, centros de mesa, globos o photocall."),
-            ("¿Cómo reservo?", f"Escríbenos por WhatsApp o llámanos al {PHONE} con la fecha, el horario y el número de invitados. Te confirmamos disponibilidad y precio."),
+            ("¿Cómo reservo?", f"Escríbenos por WhatsApp ({PHONE}), por correo a {EMAIL} o por Instagram o Facebook, con la fecha, el horario y el número de invitados. Te confirmamos disponibilidad y precio."),
         ],
     },
     {
@@ -118,7 +130,7 @@ PAGES = [
             ("¿Abrís de noche?", "Sí, tenemos horario de día y de noche. Dinos tu fecha y te confirmamos el horario disponible."),
             ("¿Podemos poner nuestra música?", "Sí, el salón tiene equipo de sonido y TV para vuestra música y vídeos."),
             ("¿Qué tipo de fiestas se hacen de noche?", "Despedidas de soltera y soltero, cumpleaños de adultos, aniversarios, cenas de Navidad y fiestas privadas."),
-            ("¿Cómo reservo?", f"Escríbenos por WhatsApp o llámanos al {PHONE} con la fecha, el horario y cuántos sois."),
+            ("¿Cómo reservo?", f"Escríbenos por WhatsApp ({PHONE}), por correo a {EMAIL} o por Instagram o Facebook, con la fecha, el horario y cuántos sois."),
         ],
     },
     {
@@ -144,7 +156,7 @@ PAGES = [
             ("¿Hacéis cenas de empresa y de Navidad?", "Sí. Tenemos horario de día y de noche para comidas, cenas de Navidad y eventos de empresa."),
             ("¿Se puede usar la TV para una presentación?", "El salón tiene TV y equipo de sonido. Dinos qué necesitas conectar y te lo confirmamos."),
             ("¿También para peñas y asociaciones?", "Claro: encuentros, peñas, asociaciones culturales y cualquier evento de grupo."),
-            ("¿Cómo reservo?", f"Escríbenos por WhatsApp o llámanos al {PHONE} con la fecha, el horario y el número de asistentes."),
+            ("¿Cómo reservo?", f"Escríbenos por WhatsApp ({PHONE}), por correo a {EMAIL} o por Instagram o Facebook, con la fecha, el horario y el número de asistentes."),
         ],
     },
 ]
@@ -210,9 +222,9 @@ def head(title, desc, path, jsonld, og_image="/img/og-image.jpg"):
 
 def header(home: bool):
     p = "" if home else "/"
-    links = [("celebraciones", "Celebraciones"), ("dia-noche", "Día y noche"), ("local", "El local"),
-             ("opiniones", "Opiniones"), ("reservar", "Reservar"), ("contacto", "Contacto")]
-    nav = "\n".join(f'        <a href="{p}#{k}">{v}</a>' for k, v in links)
+    links = [(f"{p}#celebraciones", "Celebraciones"), (f"{p}#local", "El local"), (f"{p}#opiniones", "Opiniones"),
+             ("/ideas/", "Ideas"), (f"{p}#reservar", "Reservar"), (f"{p}#contacto", "Contacto")]
+    nav = "\n".join(f'        <a href="{k}">{v}</a>' for k, v in links)
     return f"""<body>
   <a class="skip-link" href="#contenido">Saltar al contenido</a>
 {SPRITE}
@@ -240,17 +252,26 @@ def header(home: bool):
 """
 
 
+def channels(text_wa=WA_DEFAULT, dark=False):
+    """Botones para contactar por WhatsApp, correo, Instagram, Facebook y teléfono."""
+    cls = "channels channels-dark" if dark else "channels"
+    return f"""        <div class="{cls}">
+          <a class="ch ch-wa" href="{text_wa}" target="_blank" rel="noopener">{ic("chat")}<span>WhatsApp</span></a>
+          <a class="ch ch-mail" href="mailto:{EMAIL}">{ic("mail")}<span>Correo</span></a>
+          <a class="ch ch-ig" href="{INSTAGRAM}" target="_blank" rel="noopener">{ic("instagram")}<span>Instagram</span></a>
+          <a class="ch ch-fb" href="{FACEBOOK}" target="_blank" rel="noopener">{ic("facebook")}<span>Facebook</span></a>
+          <a class="ch ch-tel" href="tel:{PHONE_INTL}">{ic("phone")}<span>{PHONE}</span></a>
+        </div>"""
+
+
 def cta(text_wa=WA_DEFAULT):
     return f"""    <section class="cta" aria-labelledby="cta-title">
       <div class="cta-confetti" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
       <div class="container cta-inner reveal">
         <img class="cta-logo" src="/img/logo.webp" alt="" width="1400" height="295" loading="lazy">
         <h2 id="cta-title">¿Montamos la fiesta?</h2>
-        <p>De día o de noche, para 10 o para 100. Escríbenos y reserva tu fecha.</p>
-        <div class="hero-actions">
-          <a class="btn btn-dark btn-lg" href="{text_wa}" target="_blank" rel="noopener">{ic("chat")} Escribir por WhatsApp</a>
-          <a class="btn btn-outline-dark btn-lg" href="tel:{PHONE_INTL}">{ic("phone")} {PHONE}</a>
-        </div>
+        <p>De día o de noche: cuéntanos qué celebras y te ayudamos a organizarlo. Escríbenos por donde te sea más cómodo.</p>
+{channels(text_wa, dark=True)}
       </div>
     </section>
 """
@@ -266,6 +287,7 @@ def footer():
       </div>
       <nav class="footer-nav" aria-label="Celebraciones">
 {cel}
+        <a href="/ideas/">Ideas para tu fiesta</a>
         <a href="/#reservar">Reservar</a>
         <a href="/#contacto">Contacto</a>
       </nav>
@@ -322,7 +344,7 @@ BUSINESS_LD = {
     "hasMap": "https://www.google.com/maps/search/?api=1&query=36.6574069%2C-4.5781131",
     "areaServed": ["Alhaurín de la Torre", "Alhaurín el Grande", "Churriana", "Cártama", "Benalmádena", "Torremolinos", "Málaga"],
     "amenityFeature": [{"@type": "LocationFeatureSpecification", "name": n, "value": True} for n in
-                       ["Parque de bolas y tobogán", "Futbolín y mesa de pimpón", "Equipo de sonido y TV",
+                       ["Parque de bolas y tobogán", "Rincón infantil", "Equipo de sonido y TV",
                         "Zona de office con frigorífico y microondas", "Aire acondicionado"]],
     "sameAs": [INSTAGRAM, FACEBOOK],
 }
@@ -330,8 +352,8 @@ BUSINESS_LD = {
 HOME_FAQ = [
     ("¿Qué celebraciones se pueden hacer en Diver Lauro?", "De todo: cumpleaños infantiles y de adultos, comuniones, bautizos, bodas y aniversarios, despedidas de soltero/a, comidas y cenas de empresa, reuniones familiares, peñas y eventos privados."),
     ("¿Se pueden hacer fiestas de noche?", "Sí. Tenemos horario de día y de noche: desde una merienda infantil hasta una cena o una fiesta nocturna. Consúltanos el horario para tu fecha."),
-    ("¿Cómo reservo el salón?", f"Escríbenos por WhatsApp o llámanos al {PHONE} con la fecha, el horario, el tipo de celebración y el número aproximado de invitados. Te confirmamos disponibilidad y precio."),
-    ("¿Qué incluye el salón?", "Sala amplia con mesas y sillas, parque de bolas con tobogán, futbolín, pimpón, rincón infantil, equipo de sonido y TV, zona de office con frigorífico y microondas, tronas, aseos y aire acondicionado."),
+    ("¿Cómo reservo el salón?", f"Escríbenos por WhatsApp o llámanos al {PHONE}, mándanos un correo a {EMAIL} o un mensaje por Instagram o Facebook. Dinos la fecha, el horario, el tipo de celebración y cuántos seréis, y te confirmamos disponibilidad y precio."),
+    ("¿Qué incluye el salón?", "Sala amplia con mesas y sillas, parque de bolas con tobogán, rincón infantil, equipo de sonido y TV, zona de office con frigorífico y microondas, tronas, aseos y aire acondicionado."),
     ("¿Puedo decorarlo a mi gusto?", "¡Claro! Globos, manteles, mesas dulces, photocalls… Cuéntanos tu idea y te ayudamos."),
     ("¿Dónde está Diver Lauro?", "En la Calle Crianza, 30, 29130 Alhaurín de la Torre (Málaga), a pocos minutos de Málaga capital, Churriana y Alhaurín el Grande."),
 ]
@@ -370,6 +392,21 @@ def cel_cards():
             <span class="cel-more">Ver más {ic("arrow")}</span>
           </a>""")
     return "\n".join(out)
+
+
+def reviews_html():
+    if not REVIEWS:
+        return ""
+    import html as _h
+    cards = []
+    for i, (autor, n, texto, cuando) in enumerate(REVIEWS):
+        full = ic("star") * int(n)
+        cards.append(f"""          <figure class="review-card reveal" style="--d:{0.05 + i * 0.06:.2f}s">
+            <span class="rating-stars" aria-label="{n} de 5 estrellas">{full}</span>
+            <blockquote>“{_h.escape(texto)}”</blockquote>
+            <figcaption><span class="rv-avatar" aria-hidden="true">{_h.escape(autor[:1].upper())}</span>{_h.escape(autor)}{(" · " + _h.escape(cuando)) if cuando else ""} · {ic("google")} Google</figcaption>
+          </figure>""")
+    return '          <div class="review-cards">\n' + "\n".join(cards) + "\n          </div>"
 
 
 def stars():
@@ -500,8 +537,8 @@ def build_home():
             <strong>Sonido y TV</strong><span>Tu música y tus vídeos.</span>
           </div>
           <div class="tile-g reveal" style="--d:.34s;--c:#F25C54">
-            <span class="tile-ic">{ic("game")}</span>
-            <strong>Futbolín y pimpón</strong><span>Partidos para todas las edades.</span>
+            <span class="tile-ic">{ic("palette")}</span>
+            <strong>Decóralo a tu gusto</strong><span>Globos, mesa dulce, photocall…</span>
           </div>
           <div class="tile-g tile-wide reveal" style="--d:.4s;--c:#2B7BE4">
             <span class="tile-ic">{ic("snow")}</span>
@@ -514,7 +551,7 @@ def build_home():
           <li>{ic("music")} TV</li>
           <li>{ic("utensils")} Frigorífico y microondas</li>
           <li>{ic("users")} Mesas y sillas</li>
-          <li>{ic("game")} Futbolín y pimpón</li>
+          <li>{ic("game")} Rincón infantil</li>
           <li>{ic("heart")} Tronas para bebés</li>
           <li>{ic("check")} Aseos</li>
         </ul>
@@ -546,7 +583,7 @@ def build_home():
             <li class="reveal tilt" style="--d:.19s"><span class="praise-ic" style="--c:#16B39A">{ic("game")}</span><strong>Los niños lo disfrutan</strong><span>Parque de bolas y juegos para no aburrirse.</span></li>
             <li class="reveal tilt" style="--d:.26s"><span class="praise-ic" style="--c:#E0B526">{ic("snow")}</span><strong>Climatizado</strong><span>Cómodo tanto en verano como en invierno.</span></li>
           </ul>
-          <div class="review-cards" id="review-cards" hidden></div>
+{reviews_html()}
         </div>
       </div>
     </section>
@@ -562,6 +599,7 @@ def build_home():
             <li>{ic("check")} Horario de día o de noche</li>
             <li>{ic("check")} Trato cercano y familiar</li>
           </ul>
+          <p class="other-ch reveal" style="--d:.3s">¿Prefieres otro canal? Escríbenos a <a href="mailto:{EMAIL}">{EMAIL}</a>, por <a href="{INSTAGRAM}" target="_blank" rel="noopener">Instagram</a> o por <a href="{FACEBOOK}" target="_blank" rel="noopener">Facebook</a>.</p>
         </div>
         <form class="reserve-form reveal" style="--d:.12s" id="reserve-form" novalidate>
           <div class="field">
@@ -627,6 +665,19 @@ def build_home():
       </div>
     </section>
 
+    <section class="section" id="ideas" aria-labelledby="ideas-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="kicker reveal">Ideas para tu fiesta</p>
+          <h2 id="ideas-title" class="reveal" style="--d:.08s">Guías para <span class="script-hl">organizarlo todo</span></h2>
+          <p class="section-lead reveal" style="--d:.16s">Consejos y listas que usan las familias y grupos que celebran con nosotros.</p>
+        </div>
+        <div class="cel-grid cel-grid-4">
+{idea_cards()}
+        </div>
+      </div>
+    </section>
+
     <section class="section section-alt" id="preguntas" aria-labelledby="faq-title">
       <div class="container faq-wrap">
         <div class="section-head section-head-left">
@@ -646,6 +697,7 @@ def build_home():
         <div class="contact-info">
           <p class="kicker reveal">Contacto</p>
           <h2 id="contact-title" class="reveal" style="--d:.08s">Ven a <span class="script-hl">conocernos</span></h2>
+          <p class="section-lead reveal" style="--d:.1s">Escríbenos por WhatsApp, correo, Instagram o Facebook, o llámanos. Te respondemos lo antes posible.</p>
           <figure class="facade reveal" style="--d:.12s">
             <img src="/img/fotos/fachada-sm.webp" alt="Fachada de Diver Lauro con el cartel del salón" width="800" height="450" loading="lazy">
           </figure>
@@ -654,9 +706,13 @@ def build_home():
               <span class="contact-ic" style="--c:#F25C54">{ic("pin")}</span>
               <span><small>Dirección</small>Calle Crianza, 30 · 29130 Alhaurín de la Torre</span>
             </a>
+            <a class="contact-item" href="https://wa.me/{WA}" target="_blank" rel="noopener">
+              <span class="contact-ic" style="--c:#25D366">{ic("chat")}</span>
+              <span><small>WhatsApp</small>{PHONE}</span>
+            </a>
             <a class="contact-item" href="tel:{PHONE_INTL}">
               <span class="contact-ic" style="--c:#2B7BE4">{ic("phone")}</span>
-              <span><small>Teléfono y WhatsApp</small>{PHONE}</span>
+              <span><small>Teléfono</small>{PHONE}</span>
             </a>
             <a class="contact-item" href="mailto:{EMAIL}">
               <span class="contact-ic" style="--c:#16B39A">{ic("mail")}</span>
@@ -665,6 +721,10 @@ def build_home():
             <a class="contact-item" href="{INSTAGRAM}" target="_blank" rel="noopener">
               <span class="contact-ic" style="--c:#D9479B">{ic("instagram")}</span>
               <span><small>Instagram</small>@diverlauro</span>
+            </a>
+            <a class="contact-item" href="{FACEBOOK}" target="_blank" rel="noopener">
+              <span class="contact-ic" style="--c:#1877F2">{ic("facebook")}</span>
+              <span><small>Facebook</small>Diver Lauro</span>
             </a>
           </address>
         </div>
@@ -796,10 +856,120 @@ def build_page(p):
     out.write_text(html, encoding="utf-8")
 
 
+def idea_cards(exclude=None):
+    out = []
+    for i, a in enumerate(x for x in ARTICLES if x["slug"] != exclude):
+        out.append(f"""          <a class="cel-card reveal tilt" style="--d:{0.05 + i * 0.06:.2f}s;--c:{a['color']}" href="/ideas/{a['slug']}/">
+            <span class="cel-ic">{ic(a['icon'])}</span>
+            <h3>{a['card']}</h3>
+            <p>{a['card_text']}</p>
+            <span class="cel-more">Leer guía {ic("arrow")}</span>
+          </a>""")
+    return "\n".join(out)
+
+
+def build_ideas_index():
+    path = "/ideas/"
+    ld = [{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Inicio", "item": f"{SITE}/"},
+        {"@type": "ListItem", "position": 2, "name": "Ideas para tu fiesta", "item": SITE + path}]}]
+    html = head("Ideas para tu fiesta: guías y checklists | Diver Lauro",
+                "Guías prácticas para organizar cumpleaños infantiles, comuniones, bautizos, despedidas y comidas de empresa. Consejos de Diver Lauro, salón de celebraciones en Alhaurín de la Torre.",
+                path, ld)
+    html += header(False)
+    html += f"""
+  <main id="contenido">
+    <section class="page-hero" aria-labelledby="page-title">
+      <div class="container">
+        <nav class="crumbs reveal" aria-label="Migas de pan"><a href="/">Inicio</a> <span aria-hidden="true">/</span> <span>Ideas</span></nav>
+        <p class="kicker reveal" style="--d:.05s">Ideas para tu fiesta</p>
+        <h1 id="page-title" class="reveal" style="--d:.1s">Guías para organizar <span class="script" style="color:var(--coral)">tu celebración</span></h1>
+        <p class="hero-lead reveal" style="--d:.18s">Pasos, checklists y consejos para que tu fiesta salga redonda, sea un cumpleaños, una comunión, una despedida o la cena de empresa.</p>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <div class="cel-grid cel-grid-4">
+{idea_cards()}
+        </div>
+      </div>
+    </section>
+{cta()}  </main>
+
+"""
+    html += footer()
+    out = ROOT / "ideas" / "index.html"
+    out.parent.mkdir(exist_ok=True)
+    out.write_text(html, encoding="utf-8")
+
+
+def build_article(a):
+    path = f"/ideas/{a['slug']}/"
+    rel = next(p for p in PAGES if p["slug"] == a["related"])
+    ld = [
+        {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Inicio", "item": f"{SITE}/"},
+            {"@type": "ListItem", "position": 2, "name": "Ideas para tu fiesta", "item": f"{SITE}/ideas/"},
+            {"@type": "ListItem", "position": 3, "name": a["card"], "item": SITE + path}]},
+        {"@context": "https://schema.org", "@type": "BlogPosting", "headline": a["h1"], "description": a["desc"],
+         "datePublished": IDEAS_FECHA, "dateModified": IDEAS_FECHA, "inLanguage": "es-ES",
+         "image": f"{SITE}/img/og-image.jpg", "mainEntityOfPage": SITE + path,
+         "author": {"@type": "Organization", "name": "Diver Lauro", "url": f"{SITE}/"},
+         "publisher": {"@type": "Organization", "name": "Diver Lauro", "logo": {"@type": "ImageObject", "url": f"{SITE}/img/logo.png"}}},
+    ]
+    wa_link = wa(rel["wa"])
+    html = head(a["title"], a["desc"], path, ld)
+    html += header(False)
+    html += f"""
+  <main id="contenido">
+    <section class="page-hero" aria-labelledby="page-title">
+      <div class="container article-head">
+        <nav class="crumbs reveal" aria-label="Migas de pan"><a href="/">Inicio</a> <span aria-hidden="true">/</span> <a href="/ideas/">Ideas</a> <span aria-hidden="true">/</span> <span>{a['card']}</span></nav>
+        <p class="kicker reveal" style="--d:.05s">Ideas para tu fiesta</p>
+        <h1 id="page-title" class="reveal" style="--d:.1s">{a['h1']}</h1>
+        <p class="hero-lead reveal" style="--d:.18s">{a['intro']}</p>
+      </div>
+    </section>
+    <section class="section section-article">
+      <div class="container">
+        <article class="article">
+{a['body']}
+          <aside class="article-cta" style="--c:{rel['color']}">
+            <span class="cel-ic">{ic(rel['icon'])}</span>
+            <div>
+              <strong>¿Lo celebras en Alhaurín de la Torre?</strong>
+              <p>En Diver Lauro tienes el salón listo para tu celebración. <a href="/{rel['slug']}/">Mira todo lo que incluye</a> o escríbenos por donde prefieras.</p>
+{channels(wa_link)}
+            </div>
+          </aside>
+        </article>
+      </div>
+    </section>
+    <section class="section section-alt" aria-labelledby="more-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="kicker reveal">Más ideas</p>
+          <h2 id="more-title" class="reveal" style="--d:.08s">Sigue <span class="script-hl">leyendo</span></h2>
+        </div>
+        <div class="cel-grid">
+{idea_cards(exclude=a['slug'])}
+        </div>
+      </div>
+    </section>
+{cta(wa_link)}  </main>
+
+"""
+    html += footer()
+    out = ROOT / "ideas" / a["slug"] / "index.html"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(html, encoding="utf-8")
+
+
 def build_sitemap():
     from datetime import date
     today = date.today().isoformat()
-    urls = [("/", "1.0")] + [(f"/{p['slug']}/", "0.8") for p in PAGES]
+    urls = [("/", "1.0")] + [(f"/{p['slug']}/", "0.8") for p in PAGES] + [("/ideas/", "0.6")] + \
+        [(f"/ideas/{a['slug']}/", "0.6") for a in ARTICLES]
     body = "\n".join(f"  <url>\n    <loc>{SITE}{u}</loc>\n    <lastmod>{today}</lastmod>\n    <priority>{pr}</priority>\n  </url>" for u, pr in urls)
     (ROOT / "sitemap.xml").write_text(f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{body}\n</urlset>\n', encoding="utf-8")
     (ROOT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nDisallow: /tools/\nDisallow: /redes-sociales/\n\nSitemap: {SITE}/sitemap.xml\n", encoding="utf-8")
@@ -809,5 +979,8 @@ if __name__ == "__main__":
     build_home()
     for page in PAGES:
         build_page(page)
+    build_ideas_index()
+    for art in ARTICLES:
+        build_article(art)
     build_sitemap()
-    print("OK:", "index.html +", len(PAGES), "páginas + sitemap.xml + robots.txt")
+    print("OK:", "index.html +", len(PAGES), "páginas +", len(ARTICLES), "guías + sitemap.xml + robots.txt")

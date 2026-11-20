@@ -14,6 +14,8 @@ Publicada en **https://diverlauro.com/** (Cloudflare Pages: cada `git push` a `m
   - `/comuniones-bautizos-alhaurin-de-la-torre/`
   - `/despedidas-fiestas-noche-alhaurin-de-la-torre/`
   - `/comidas-empresa-eventos-alhaurin-de-la-torre/`
+- **Guías "Ideas para tu fiesta"** en `/ideas/` (cumpleaños infantil, comunión o bautizo, despedidas, comida de empresa): contenido útil que atrae visitas desde Google. Se editan en `tools/ideas.py`.
+- **Contacto por cualquier canal**: WhatsApp, correo, Instagram, Facebook y teléfono.
 - **Formulario → WhatsApp** con tipo de celebración, fecha, horario e invitados. No necesita servidor ni guarda datos.
 - **SEO local**: datos estructurados `LocalBusiness`/`EventVenue`, `Service`, `BreadcrumbList` y `FAQPage`; Open Graph; `sitemap.xml`; `robots.txt`.
 - **Kit de Instagram** en `redes-sociales/` (ver `redes-sociales/LEEME.md`).
@@ -21,7 +23,8 @@ Publicada en **https://diverlauro.com/** (Cloudflare Pages: cada `git push` a `m
 ## Estructura
 
 ```
-tools/build.py        GENERA la portada y las páginas de celebración (textos, FAQ, SEO)
+tools/build.py        GENERA la portada, las páginas de celebración y las guías (textos, FAQ, SEO, reseñas)
+tools/ideas.py        Textos de las guías de /ideas/
 tools/redes.py        GENERA el kit de Instagram (PNG) desde plantillas HTML
 tools/partials/       Iconos compartidos
 index.html            Portada (generada)
@@ -49,12 +52,12 @@ python tools/redes.py
 
 ### Añadir reseñas reales de Google
 
-En `js/main.js`, al principio, rellena `REVIEWS` copiando reseñas **tal cual** de Google:
+En `tools/build.py`, al principio, rellena `REVIEWS` copiando reseñas **tal cual** de la ficha de Google Maps y ejecuta `python tools/build.py`:
 
-```js
-const REVIEWS = [
-  { autor: "María G.", texto: "Texto exacto de la reseña…", estrellas: 5 },
-];
+```python
+REVIEWS = [
+    ("María G.", 5, "Texto exacto de la reseña…", "hace 2 meses"),
+]
 ```
 
 ### Fotos nuevas

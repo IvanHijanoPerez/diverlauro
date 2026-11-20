@@ -1,11 +1,5 @@
 /* Diver Lauro · interacciones */
 
-/* ===== Opiniones reales de Google =====
-   Para mostrar reseñas, añádelas aquí copiándolas tal cual de Google:
-   { autor: "Nombre", texto: "Texto de la reseña", estrellas: 5 }
-   Si la lista está vacía, la web solo muestra la valoración media. */
-const REVIEWS = [];
-
 (() => {
   const WHATSAPP = "34647913022";
   const root = document.documentElement;
@@ -142,19 +136,6 @@ const REVIEWS = [];
       });
       card.addEventListener("pointerleave", () => { card.style.transform = ""; });
     });
-  }
-
-  /* ---------- Opiniones ---------- */
-  const rc = $("#review-cards");
-  if (rc && REVIEWS.length) {
-    const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-    rc.innerHTML = REVIEWS.map((r) => `
-      <figure class="review-card reveal is-visible">
-        <span class="rating-stars" aria-label="${r.estrellas || 5} estrellas">${'<svg class="ic"><use href="#i-star"/></svg>'.repeat(r.estrellas || 5)}</span>
-        <blockquote>“${esc(r.texto)}”</blockquote>
-        <figcaption>${esc(r.autor)} · reseña de Google</figcaption>
-      </figure>`).join("");
-    rc.hidden = false;
   }
 
   /* ---------- Formulario → WhatsApp ---------- */
