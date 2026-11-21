@@ -299,9 +299,11 @@ def main():
         print("OK  img/redes/ (miniaturas para la web)")
         # iconos de la web (favicon e icono de app) a partir de la foto de perfil amarilla
         ico = Image.open(OUT / "perfil/perfil-amarillo.png").convert("RGB")
-        for size, name in ((512, "icon-512.png"), (192, "icon-192.png"), (180, "apple-touch-icon.png"), (48, "favicon-48.png"), (32, "favicon-32.png")):
+        for size, name in ((512, "icon-512.png"), (192, "icon-192.png"), (180, "apple-touch-icon.png"), (96, "favicon-96.png"), (48, "favicon-48.png"), (32, "favicon-32.png")):
             ico.resize((size, size), Image.LANCZOS).save(ROOT / "img" / name, optimize=True)
-        print("OK  img/ (favicon e iconos de la web)")
+        # favicon.ico en la raíz (lo buscan Google y algunos navegadores)
+        ico.resize((48, 48), Image.LANCZOS).save(ROOT / "favicon.ico", sizes=[(16, 16), (32, 32), (48, 48)])
+        print("OK  img/ y favicon.ico (iconos de la web)")
     except ImportError:
         print("Pillow no instalado: no se generan las miniaturas de la web")
 

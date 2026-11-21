@@ -201,8 +201,10 @@ def head(title, desc, path, jsonld, og_image="/img/og-image.jpg"):
   <meta name="twitter:title" content="{title}">
   <meta name="twitter:description" content="{desc}">
   <meta name="twitter:image" content="{SITE}{og_image}">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/img/icon-192.png" sizes="192x192" type="image/png">
+  <link rel="icon" href="/img/favicon-96.png" sizes="96x96" type="image/png">
   <link rel="icon" href="/img/favicon-48.png" sizes="48x48" type="image/png">
-  <link rel="icon" href="/img/favicon-32.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -414,7 +416,10 @@ def stars():
 
 
 def build_home():
-    ld = [BUSINESS_LD, faq_ld(HOME_FAQ)]
+    website_ld = {"@context": "https://schema.org", "@type": "WebSite", "@id": f"{SITE}/#web", "name": "Diver Lauro",
+                  "alternateName": ["Diver Lauro Salón de Celebraciones", "diverlauro.com"], "url": f"{SITE}/",
+                  "inLanguage": "es-ES", "publisher": {"@id": f"{SITE}/#negocio"}}
+    ld = [website_ld, BUSINESS_LD, faq_ld(HOME_FAQ)]
     html = head("Diver Lauro · Salón de celebraciones y fiestas en Alhaurín de la Torre (Málaga)",
                 f"Diver Lauro, salón de celebraciones en Alhaurín de la Torre (Málaga). Cumpleaños, comuniones, bautizos, bodas y comidas de empresa de día, y fiestas privadas y despedidas de noche. Parque de bolas, sonido y salón climatizado. Reserva: {PHONE}.",
                 "/", ld)
