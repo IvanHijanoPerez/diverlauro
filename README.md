@@ -52,7 +52,7 @@ python tools/redes.py
 
 ### Reseñas de Google (automáticas)
 
-La función `functions/api/resenas.js` (Cloudflare Pages Functions) pide a Google la nota, el número de reseñas y hasta 5 reseñas (Places API New). Guarda una copia global en Cloudflare KV que se renueva cada 24 h y tiene un **límite duro de 20 consultas a Google al día** (unas 600/mes como máximo, dentro del uso gratuito). La portada las muestra solas en «Opiniones» (solo las de 4–5 estrellas con texto). Si no hay clave o Google falla, la web sigue mostrando la nota fija (4,5 · 175).
+La función `functions/api/resenas.js` (Cloudflare Pages Functions) pide a Google la nota, el número de reseñas y hasta 5 reseñas (Places API New). Guarda una copia global en Cloudflare KV que se renueva cada 24 h y tiene un **límite duro de 2 consultas a Google al día** (como mucho unas 60/mes; lo normal es 1 al día). La portada las muestra solas en «Opiniones» (solo las de 4–5 estrellas con texto). Si no hay clave o Google falla, la web sigue mostrando la nota fija (4,5 · 175).
 
 Configuración (una sola vez):
 1. Google Cloud → proyecto → activar **Places API (New)** → crear **clave de API** restringida a esa API.

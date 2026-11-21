@@ -14,7 +14,7 @@
  *   - Si no hay clave o no hay KV, NUNCA se llama a Google.
  */
 const REFRESCO_MS = 24 * 60 * 60 * 1000;
-const MAX_GOOGLE_DIA = 20;
+const MAX_GOOGLE_DIA = 2;
 const BUSCAR = "Diver Lauro, Calle Crianza 30, Alhaurín de la Torre";
 const MIN_ESTRELLAS = 4;
 
